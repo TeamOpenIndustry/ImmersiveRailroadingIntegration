@@ -11,7 +11,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber(modid=ImmersiveRailroading.MODID)
+@Mod.EventBusSubscriber
 public class Legacy {
     public static class LegacyRailGagTile extends TileEntityTickableTrack {
         @Override
