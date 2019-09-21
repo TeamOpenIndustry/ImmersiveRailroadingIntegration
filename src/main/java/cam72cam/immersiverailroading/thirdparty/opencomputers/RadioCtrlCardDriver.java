@@ -6,13 +6,12 @@ import cam72cam.immersiverailroading.IRItems;
 import cam72cam.immersiverailroading.entity.Locomotive;
 import cam72cam.immersiverailroading.thirdparty.CommonAPI;
 import li.cil.oc.api.Network;
-import li.cil.oc.api.driver.DriverItem;
+import li.cil.oc.api.prefab.DriverItem;
 import li.cil.oc.api.driver.item.Slot;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.Visibility;
-import li.cil.oc.api.prefab.AbstractManagedEnvironment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
@@ -21,7 +20,7 @@ import li.cil.oc.api.network.ComponentConnector;
 import li.cil.oc.api.network.EnvironmentHost;
 import li.cil.oc.api.network.ManagedEnvironment;
 
-public class RadioCtrlCardDriver implements DriverItem {
+public class RadioCtrlCardDriver extends DriverItem {
 
 	@Override
 	public boolean worksWith(ItemStack stack) {
@@ -63,7 +62,7 @@ public class RadioCtrlCardDriver implements DriverItem {
 		return null;
 	}
 
-	public class RadioCtrlCardManager extends AbstractManagedEnvironment {
+	public class RadioCtrlCardManager extends li.cil.oc.api.prefab.ManagedEnvironment {
 		protected Vec3d cardPosition;
 		protected CommonAPI api;
 		protected ComponentConnector node;
@@ -135,7 +134,7 @@ public class RadioCtrlCardDriver implements DriverItem {
 		public Object[] getPos(Context context, Arguments args) {
 			if (radioDrain()) {
 				Vec3d pos = api.getPosition();
-				return new Object[] { pos.x, pos.y, pos.z };
+				return new Object[] { pos.xCoord, pos.yCoord, pos.zCoord };
 			}
 			return null;
 		}

@@ -8,7 +8,7 @@ import cam72cam.immersiverailroading.thirdparty.CommonAPI;
 import cam72cam.immersiverailroading.tile.RailBase;
 import cam72cam.mod.math.Vec3i;
 import li.cil.oc.api.Network;
-import li.cil.oc.api.driver.DriverBlock;
+import li.cil.oc.api.driver.SidedBlock;
 import li.cil.oc.api.driver.NamedBlock;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
@@ -16,14 +16,13 @@ import li.cil.oc.api.machine.Context;
 import li.cil.oc.api.network.ManagedEnvironment;
 import li.cil.oc.api.network.Node;
 import li.cil.oc.api.network.Visibility;
-import li.cil.oc.api.prefab.AbstractManagedEnvironment;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.UUID;
 
-public class AugmentDriver implements DriverBlock {
+public class AugmentDriver implements SidedBlock {
 
 	@Override
 	public ManagedEnvironment createEnvironment(World world, BlockPos pos, EnumFacing facing) {
@@ -71,7 +70,7 @@ public class AugmentDriver implements DriverBlock {
 		}
 	}
 
-	public abstract class AugmentManagerBase extends AbstractManagedEnvironment implements NamedBlock {
+	public abstract class AugmentManagerBase extends li.cil.oc.api.prefab.ManagedEnvironment implements NamedBlock {
 		protected final World world;
 		protected final BlockPos pos;
 		private int ticksAlive;
