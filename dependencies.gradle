@@ -28,9 +28,9 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-	compile 'track-api:TrackAPI:1.1_1.11'
-	compile 'immersive-engineering:ImmersiveEngineering:0.11:63'
+	compile 'track-api:TrackAPI:1.1_1.10'
+	compile 'immersive-engineering:ImmersiveEngineering:0.10:61'
 
-	compile "li.cil.oc:OpenComputers:MC1.11.2-1.7.+:api"
-	runtime "li.cil.oc:OpenComputers:MC1.11.2-1.7.+"
+	compile "li.cil.oc:OpenComputers:MC1.10.2-1.7.+:api"
+	runtime "li.cil.oc:OpenComputers:MC1.10.2-1.7.+"
 }
