@@ -4,7 +4,6 @@ repositories {
 		url = "http://maven.k-4u.nl/"
 	}
     maven { url = "http://maven.cil.li/" }
-	maven { url = "https://cc.crzd.me/maven/" }
     maven {
         name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
@@ -33,11 +32,10 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-	compile 'track-api:TrackAPI:1.1_1.12'
-	compile 'immersive-engineering:ImmersiveEngineering:0.12:74'
+	compile 'track-api:TrackAPI:1.1_1.11'
+	compile 'immersive-engineering:ImmersiveEngineering:0.11:63'
 
 	compile "igwmod:IGW-Mod-1.12.2:1.4.4-15:userdev"
-	compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
-	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
-	compile "dan200.computercraft:ComputerCraft:1.80pr1-build3"
+	compile "li.cil.oc:OpenComputers:MC1.11.2-1.7.+:api"
+	runtime "li.cil.oc:OpenComputers:MC1.11.2-1.7.+"
 }
