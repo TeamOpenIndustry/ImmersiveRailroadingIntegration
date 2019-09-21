@@ -1,4 +1,4 @@
-package cam72cam.immersiverailroading;
+package cam72cam.immersiverailroading.legacy;
 
 import cam72cam.immersiverailroading.IRBlocks;
 import cam72cam.immersiverailroading.ImmersiveRailroading;
