@@ -33,7 +33,7 @@ dependencies {
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
 
-	compile 'track-api:TrackAPI:1.1_1.12'
+	//compile 'track-api:TrackAPI:1.1_1.12'
 	compile 'immersive-engineering:ImmersiveEngineering:0.12:74'
 
 	compile "igwmod:IGW-Mod-1.12.2:1.4.4-15:userdev"
