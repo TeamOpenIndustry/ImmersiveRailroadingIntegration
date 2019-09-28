@@ -15,7 +15,7 @@ apply plugin: 'java'
 sourceSets {
 	main {
 		java {
-			srcDir "ImmersiveRailroadingIntegration/src"
+			srcDir "ImmersiveRailroadingIntegration/src/main/java"
 		}
 	}
 }
