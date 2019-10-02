@@ -5,6 +5,7 @@ import cam72cam.immersiverailroading.physics.PhysicsAccummulator;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.immersiverailroading.registry.LocomotiveDefinition;
 import cam72cam.immersiverailroading.tile.RailBase;
+import cam72cam.immersiverailroading.util.Speed;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.immersiverailroading.thirdparty.event.TagEvent;
 import net.minecraft.util.EnumFacing;
@@ -220,4 +221,11 @@ public class CommonAPI {
     public UUID getUniqueID() {
         return stock.getUUID();
     }
+    
+    public Speed getCurrentSpeed() {
+        if (stock instanceof Locomotive) {
+            return ((Locomotive)stock).getCurrentSpeed();
+        }
+    }
+    
 }
