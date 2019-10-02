@@ -140,10 +140,18 @@ public class RadioCtrlCardDriver implements DriverItem {
 			return null;
 		}
 
-		@Callback(doc = "function():araray -- returns the UUID of the bound loco")
+		@Callback(doc = "function():array -- returns the UUID of the bound loco")
 		public Object[] getLinkUUID(Context context, Arguments args) {
 			if (radioDrain()) {
 				return new Object[] { api.getUniqueID() };
+			}
+			return new Object[] { null };
+		}
+		
+		@Callback(doc = "function():array -- returns the getCurrentSpeed of locomotive")
+		public Object[] getCurrentSpeed(Context context, Arguments args) {
+			if (radioDrain()) {
+				return new Object[] { api.getCurrentSpeed() };
 			}
 			return new Object[] { null };
 		}
