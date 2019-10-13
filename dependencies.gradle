@@ -21,6 +21,8 @@ sourceSets {
 }
 
 dependencies {
+	compile project(":TrackAPI")
+
 	compile 'immersive-engineering:ImmersiveEngineering:0.12:74'
 
 	compile "igwmod:IGW-Mod-1.12.2:1.4.4-15:userdev"
