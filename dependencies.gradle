@@ -20,7 +20,7 @@ dependencies {
 	compile 'immersive-engineering:ImmersiveEngineering:0.10:61'
 	compile "li.cil.oc:OpenComputers:MC1.10.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.10.2-1.7.+"
-	compile "dan200.computercraft:ComputerCraft-SquidDev-CC-ComputerCraft-feature-minecraft-1.11.2:1.80pr1-build4"
+	compile "dan200.computercraft:ComputerCraft-SquidDev-CC-ComputerCraft-feature-minecraft-1.9.4:1.80pr1-build2"
 }
 
 jar {
