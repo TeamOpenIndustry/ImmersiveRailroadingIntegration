@@ -1,0 +1,38 @@
+repositories {
+    maven { url = "http://maven.cil.li/" }
+	maven { url = "https://cc.crzd.me/maven/" }
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
+	maven {
+		name = "forge"
+		url = "https://files.minecraftforge.net/maven"
+	}
+	maven {
+		name = "chickenbones"
+		url = "http://chickenbones.net/maven/"
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir "ImmersiveRailroadingIntegration/src/main/java"
+			srcDir "TrackAPI/src/main/java"
+		}
+	}
+}
+
+dependencies {
+	compile 'immersive-engineering:ImmersiveEngineering:0.7.7:deobf'
+	compile "li.cil.oc:OpenComputers:MC1.7.10-1.7.+:api"
+	runtime "li.cil.oc:OpenComputers:MC1.7.10-1.7.+"
+	compile "codechicken:CodeChickenLib:1.7.10-1.1.3.140:dev"
+	compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
+	compile "dan200.computercraft:ComputerCraft1.75"
+}
+
+jar {
+	exclude 'trackapi*'
+}
