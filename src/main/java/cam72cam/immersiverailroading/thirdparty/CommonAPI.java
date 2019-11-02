@@ -4,16 +4,14 @@ import cam72cam.immersiverailroading.entity.*;
 import cam72cam.immersiverailroading.physics.PhysicsAccummulator;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.immersiverailroading.registry.LocomotiveDefinition;
-import cam72cam.immersiverailroading.tile.RailBase;
-import cam72cam.mod.math.Vec3i;
 import cam72cam.immersiverailroading.thirdparty.event.TagEvent;
-import net.minecraft.util.EnumFacing;
+import cam72cam.immersiverailroading.tile.RailBase;
+import cam72cam.mod.fluid.FluidStack;
+import cam72cam.mod.math.Vec3i;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fluids.FluidStack;
 
 import java.util.*;
 
@@ -60,7 +58,7 @@ public class CommonAPI {
             info.put("tag", stock.tag);
             info.put("weight", stock.getWeight());
 
-            EnumFacing dir = EnumFacing.fromAngle(stock.getRotationYaw());
+            Direction dir = Direction.fromRotation(stock.getRotationYaw());
             if (stock instanceof EntityMoveableRollingStock) {
                 EntityMoveableRollingStock movable = (EntityMoveableRollingStock) stock;
                 info.put("speed", movable.getCurrentSpeed().metric());
@@ -96,8 +94,8 @@ public class CommonAPI {
 
             FluidStack fluid = getFluid();
             if (fluid != null) {
-                info.put("fluid_type", fluid.getFluid().getName());
-                info.put("fluid_amount", fluid.amount);
+                info.put("fluid_type", fluid.getFluid().ident);
+                info.put("fluid_amount", fluid.getAmount());
             } else {
                 info.put("fluid_type", null);
                 info.put("fluid_amount", 0);
@@ -132,7 +130,7 @@ public class CommonAPI {
         info.put("tractive_effort_N", acc.tractiveEffortNewtons);
         info.put("weight_kg", acc.massToMoveKg);
         info.put("speed_km", stock.getCurrentSpeed().metric());
-        EnumFacing dir = EnumFacing.fromAngle(stock.getRotationYaw());
+        Direction dir = Direction.fromRotation(stock.getRotationYaw());
         if (stock.getCurrentSpeed().metric() < 0) {
             dir = dir.getOpposite();
         }
@@ -159,8 +157,9 @@ public class CommonAPI {
     }
 
     public String getTag() {
+        //TODO fabric 1.14.4
     	TagEvent.GetTagEvent tagEvent = new TagEvent.GetTagEvent(stock.getUUID());
-    	MinecraftForge.EVENT_BUS.post(tagEvent);
+    	//MinecraftForge.EVENT_BUS.post(tagEvent);
     	
     	if (tagEvent.tag != null)
     	{
@@ -171,8 +170,9 @@ public class CommonAPI {
     }
 
     public void setTag(String tag) {
+        //TODO fabric 1.14.4
     	TagEvent.SetTagEvent tagEvent = new TagEvent.SetTagEvent(stock.getUUID(), tag);
-    	MinecraftForge.EVENT_BUS.post(tagEvent);
+    	//MinecraftForge.EVENT_BUS.post(tagEvent);
     	
         stock.tag = tag;
     }

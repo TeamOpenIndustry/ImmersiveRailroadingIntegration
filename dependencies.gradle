@@ -1,12 +1,3 @@
-repositories {
-	maven {
-		name = "IGW"
-		url = "http://maven.k-4u.nl/"
-	}
-    maven { url = "http://maven.cil.li/" }
-	maven { url = "https://cc.crzd.me/maven/" }
-}
-
 sourceSets {
 	main {
 		java {
@@ -16,12 +7,15 @@ sourceSets {
 	}
 }
 
+repositories {
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
+}
+
 dependencies {
-	compile 'immersive-engineering:ImmersiveEngineering:0.12:74'
-	compile "igwmod:IGW-Mod-1.12.2:1.4.4-15:userdev"
-	compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
-	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
-	compile "dan200.computercraft:ComputerCraft:1.80pr1-build3"
+	modCompile "curse.maven:computercraft:2812434"
 }
 
 jar {
