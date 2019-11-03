@@ -2,7 +2,7 @@ package cam72cam.immersiverailroading.thirdparty;
 
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.immersiverailroading.library.Augment;
-import cam72cam.immersiverailroading.tile.TileTileRailBase;
+import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.math.Vec3i;
 import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.lua.ILuaContext;
