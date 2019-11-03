@@ -2,7 +2,7 @@ package cam72cam.immersiverailroading.thirdparty;
 
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.immersiverailroading.library.Augment;
-import cam72cam.immersiverailroading.tile.RailBase;
+import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.math.Vec3i;
 import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.lua.ILuaContext;
@@ -22,7 +22,7 @@ public class ComputerCraft {
             @Nullable
             @Override
             public IPeripheral getPeripheral(@Nonnull World world, int x, int y, int z, int enumFacing) {
-                RailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(x, y, z), RailBase.class);
+                TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(x, y, z), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
                         return new DetectorPeripheral(world, new Vec3i(x, y, z));

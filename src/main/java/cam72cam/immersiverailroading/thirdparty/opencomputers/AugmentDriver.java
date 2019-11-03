@@ -5,7 +5,7 @@ import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.entity.Locomotive;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.thirdparty.CommonAPI;
-import cam72cam.immersiverailroading.tile.RailBase;
+import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.math.Vec3i;
 import li.cil.oc.api.Network;
 import li.cil.oc.api.driver.SidedBlock;
@@ -26,7 +26,7 @@ public class AugmentDriver implements SidedBlock {
 	@Override
 	public ManagedEnvironment createEnvironment(World world, int x, int y, int z, ForgeDirection facing) {
 		Vec3i pos = new Vec3i(x, y, z);
-		RailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, RailBase.class);
+		TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, TileRailBase.class);
 		if (te == null) {
 			return null;
 		}
@@ -50,7 +50,7 @@ public class AugmentDriver implements SidedBlock {
 	@Override
 	public boolean worksWith(World world, int x, int y, int z, ForgeDirection facing) {
 		Vec3i pos = new Vec3i(x, y, z);
-		RailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, RailBase.class);
+		TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, TileRailBase.class);
 
 		if (te == null) {
 			return false;
@@ -93,13 +93,13 @@ public class AugmentDriver implements SidedBlock {
 	    public void update() {
 			Node node = this.node();
 			if (this.ticksAlive == 0) {
-				RailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, RailBase.class);
+				TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, TileRailBase.class);
 				EntityRollingStock nearby = te.getStockNearBy(typeFilter);
 				wasOverhead = nearby != null ? nearby.getUUID() : null;
 			}
 			
 			if (node != null && this.ticksAlive % Math.max(Config.ConfigDebug.ocPollDelayTicks, 1) == 0) {
-				RailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, RailBase.class);
+				TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, TileRailBase.class);
 				EntityRollingStock nearby = te.getStockNearBy(typeFilter);
 				UUID isOverhead = nearby != null ? nearby.getUUID() : null;
 				if (isOverhead != wasOverhead) {
@@ -172,7 +172,7 @@ public class AugmentDriver implements SidedBlock {
 
 		@Callback(doc = "function():string -- returns the current augment type")
 		public Object[] getAugmentType(Context context, Arguments args) {
-			RailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, RailBase.class);
+			TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, TileRailBase.class);
 			Augment augment = te.getAugment();
 			if (augment != null) {
 				return new Object[] { augment.toString() };
@@ -234,7 +234,7 @@ public class AugmentDriver implements SidedBlock {
 
 		@Callback(doc = "function():string -- returns the current augment type")
 		public Object[] getAugmentType(Context context, Arguments args) {
-			RailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, RailBase.class);
+			TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, TileRailBase.class);
 			Augment augment = te.getAugment();
 			if (augment != null) {
 				return new Object[] { augment.toString() };
