@@ -1,6 +1,6 @@
 repositories {
 	maven {
-		name = "IGW"
+		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
 	}
 }
@@ -15,7 +15,7 @@ sourceSets {
 }
 
 dependencies {
-	compile "org.squiddev.cc-tweaked-1.14.4:cc-tweaked-1.14.4:1.85.0"
+	compile "org.squiddev:cc-tweaked-1.14.4:1.85.0"
 }
 
 jar {
