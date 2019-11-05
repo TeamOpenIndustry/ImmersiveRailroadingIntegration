@@ -7,7 +7,7 @@ import cam72cam.immersiverailroading.registry.LocomotiveDefinition;
 import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.immersiverailroading.thirdparty.event.TagEvent;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -60,7 +60,7 @@ public class CommonAPI {
             info.put("tag", stock.tag);
             info.put("weight", stock.getWeight());
 
-            EnumFacing dir = EnumFacing.fromAngle(stock.getRotationYaw());
+            Direction dir = Direction.fromAngle(stock.getRotationYaw());
             if (stock instanceof EntityMoveableRollingStock) {
                 EntityMoveableRollingStock movable = (EntityMoveableRollingStock) stock;
                 info.put("speed", movable.getCurrentSpeed().metric());
@@ -96,8 +96,8 @@ public class CommonAPI {
 
             FluidStack fluid = getFluid();
             if (fluid != null) {
-                info.put("fluid_type", fluid.getFluid().getName());
-                info.put("fluid_amount", fluid.amount);
+                info.put("fluid_type", fluid.getFluid().getAttributes().getDisplayName(null));
+                info.put("fluid_amount", fluid.getAmount());
             } else {
                 info.put("fluid_type", null);
                 info.put("fluid_amount", 0);
@@ -132,7 +132,7 @@ public class CommonAPI {
         info.put("tractive_effort_N", acc.tractiveEffortNewtons);
         info.put("weight_kg", acc.massToMoveKg);
         info.put("speed_km", stock.getCurrentSpeed().metric());
-        EnumFacing dir = EnumFacing.fromAngle(stock.getRotationYaw());
+        Direction dir = Direction.fromAngle(stock.getRotationYaw());
         if (stock.getCurrentSpeed().metric() < 0) {
             dir = dir.getOpposite();
         }

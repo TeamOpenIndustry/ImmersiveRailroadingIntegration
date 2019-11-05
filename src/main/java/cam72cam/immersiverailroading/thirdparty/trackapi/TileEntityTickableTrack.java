@@ -6,10 +6,6 @@ import cam72cam.mod.resource.Identifier;
 
 public class TileEntityTickableTrack extends TileEntityTickable implements trackapi.lib.ITrack {
 
-    public TileEntityTickableTrack() {
-        super();
-    }
-
     public TileEntityTickableTrack(Identifier id) {
         super(id);
     }
