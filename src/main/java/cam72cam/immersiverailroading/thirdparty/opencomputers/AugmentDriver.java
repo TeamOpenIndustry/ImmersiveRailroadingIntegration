@@ -152,6 +152,15 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 		
+		@Callback(doc = "function(string) -- get a property of the stock with name of the property")
+		public Object[] getProperty(Context context, Arguments arguments) {
+			CommonAPI api = CommonAPI.create(world, pos);
+			if (api != null) {
+				return api.getProperty(arguments.checkString(0));
+			}
+			return null;
+		}
+		
 		@Callback(doc = "function():table -- gets the stock's tag")
 		public Object[] getTag(Context context, Arguments arguments) {
 			CommonAPI api = CommonAPI.create(world, pos);
@@ -223,6 +232,7 @@ public class AugmentDriver implements DriverBlock {
 			}
 			return null;
 		}
+		
 		@Callback(doc = "function() -- sets the locomotive bell")
 		public Object[] bell(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);

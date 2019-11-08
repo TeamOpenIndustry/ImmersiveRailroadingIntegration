@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.*;
@@ -38,7 +37,176 @@ public class CommonAPI {
     public CommonAPI(EntityRollingStock stock) {
         this.stock = stock;
     }
+    
+    public enum StockProperty {
+        ID("id"),
+        NAME("name"),
+        TAG("tag"),
+        WEIGHT("weight"),
+        SPEED("speed"),
+        DIRECTION("direction"),
+        SPEED_DIRECTION("speed_direction"),
+        SPEED3D("speed3d"),
+        PASSENGERS("passengers"),
+        POSITION("position"),
+        UUID("uuid"),
+        HORSEPOWER("horsepower"),
+        TRACTION("traction"),
+        MAX_SPEED("max_speed"),
+        BRAKE("brake"),
+        THROTTLE("throttle"),
+        PRESSURE("pressure"),
+        TEMPERATURE("temperature"),
+        PRESSURE_TEMPERATURE("pressure_temperature"),
+        FLUID("fluid"),
+        FLUID_MAX("fluid_max"),
+        CARGO_PERCENT("cargo_percent"),
+        CARGO_SIZE("cargo_size"),
+        ;
+        
+        private static Map<String, StockProperty> mMap = initializeMapping();
+        
+        private final String name;
+        
+        StockProperty(String name) {
+            this.name = name;
+        }
+        
+        public String getName() {
+            return this.name;
+        }
+        
+        private static Map<String, StockProperty> initializeMapping() {
+            mMap = new HashMap<String, StockProperty>();
+            for (StockProperty s : StockProperty.values()) {
+                mMap.put(s.name, s);
+            }
+            return mMap;
+        }
+        
+        public static StockProperty fromName(String name) {
+            try {
+                return mMap.get(name);
+            } catch(Exception e) {
+                return null;
+            }
+        }
+    }
+    
+    public Object[] getProperty(String PropertyName) {
+        try {
+            return getProperty(StockProperty.fromName(PropertyName));
+        } catch(Exception e) {
+            return null;
+        }
+    }
 
+    public Object[] getProperty(StockProperty PropertyName) {
+        if (stock != null) {
+            switch(PropertyName) {
+                case ID:
+                    return new Object[] { stock.getDefinitionID() };
+                case NAME:
+                    return new Object[] { stock.getDefinition().name() };
+                case TAG:
+                    return new Object[] { stock.tag };
+                case WEIGHT:
+                    return new Object[] { stock.getWeight() };
+                case DIRECTION:
+                    EnumFacing dir = EnumFacing.fromAngle(stock.getRotationYaw());
+                    return new Object[] { dir.toString() };
+                case PASSENGERS:
+                    if (stock instanceof EntityRidableRollingStock) {
+                        return new Object[] { stock.getPassengerCount() };
+                    }
+                    return null;
+                case POSITION:
+                    return getPositionArray();
+                case UUID:
+                    return new Object[] { getUniqueID() };   
+                case FLUID:
+                    FluidStack fluid = getFluid();
+                    if (fluid != null) {
+                        return new Object[] { fluid.getFluid().getName(), fluid.amount };
+                    } else {
+                        return null;
+                    }
+                case FLUID_MAX:
+                    if (stock instanceof FreightTank) {
+                        return new Object[] { ((FreightTank) stock).getTankCapacity().MilliBuckets() };
+                    }
+                    return null;
+            default:
+                break;
+            }
+            if (stock instanceof EntityMoveableRollingStock) {
+                switch(PropertyName) {
+                    case SPEED:
+                        return new Object[] { ((EntityMoveableRollingStock)stock).getCurrentSpeed().metric() };
+                    case SPEED_DIRECTION:
+                        return getSpeedPolar2D();
+                    case SPEED3D:
+                        cam72cam.mod.math.Vec3d current3DVelocity = ((EntityMoveableRollingStock)stock).getVelocity(); 
+                        //TODO: Waiting for Entity.java change to forge version Vec3d
+                        return new Object[] { current3DVelocity.x, current3DVelocity.y, current3DVelocity.z };
+                default:
+                    break;
+                }
+            }
+            if (stock instanceof Locomotive) {
+                Locomotive loco = (Locomotive) stock;
+                LocomotiveDefinition locoDef = loco.getDefinition();
+                switch(PropertyName) {
+                    case HORSEPOWER:
+                        return new Object[] { locoDef.getHorsePower(loco.gauge) };
+                    case TRACTION:
+                        return new Object[] { locoDef.getStartingTractionNewtons(loco.gauge) };
+                    case MAX_SPEED:
+                        return new Object[] { locoDef.getMaxSpeed(loco.gauge).metric() };
+                    case BRAKE:
+                        return new Object[] { loco.getAirBrake() };
+                    case THROTTLE:
+                        return new Object[] { loco.getThrottle() };
+                default:
+                    break;
+                }
+                if (loco instanceof LocomotiveSteam) {
+                    LocomotiveSteam steam = (LocomotiveSteam) loco;
+                    switch(PropertyName) {
+                        case PRESSURE:
+                            return new Object[] { steam.getBoilerPressure() };
+                        case TEMPERATURE:
+                            return new Object[] { steam.getBoilerTemperature() };
+                        case PRESSURE_TEMPERATURE:
+                            return new Object[] { steam.getBoilerPressure(),steam.getBoilerTemperature() };
+                    default:
+                        break;
+                    }
+                }
+                if (loco instanceof LocomotiveDiesel) {
+                    switch(PropertyName) {
+                        case TEMPERATURE:
+                            return new Object[] { ((LocomotiveDiesel) loco).getEngineTemperature() };
+                    default:
+                        break;
+                    }
+                }
+                if (stock instanceof Freight) {
+                    Freight freight = ((Freight) stock);
+                    switch(PropertyName) { 
+                        case CARGO_PERCENT:
+                            return new Object[] { freight.getPercentCargoFull() };
+                        case CARGO_SIZE:
+                            return new Object[] { freight.getInventorySize() };
+                    default:
+                        break;
+                    }
+                }                
+            }
+        }
+        return null;
+    }
+    
     public FluidStack getFluid() {
         /*
         Capability<ITank> energyCapability = CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
@@ -159,21 +327,20 @@ public class CommonAPI {
     }
 
     public String getTag() {
-    	TagEvent.GetTagEvent tagEvent = new TagEvent.GetTagEvent(stock.getUUID());
-    	MinecraftForge.EVENT_BUS.post(tagEvent);
-    	
-    	if (tagEvent.tag != null)
-    	{
-    		return tagEvent.tag;
-    	}
-    	
+        TagEvent.GetTagEvent tagEvent = new TagEvent.GetTagEvent(stock.getUUID());
+        MinecraftForge.EVENT_BUS.post(tagEvent);
+        
+        if (tagEvent.tag != null)
+        {
+            return tagEvent.tag;
+        }
+        
         return stock.tag;
     }
 
     public void setTag(String tag) {
-    	TagEvent.SetTagEvent tagEvent = new TagEvent.SetTagEvent(stock.getUUID(), tag);
-    	MinecraftForge.EVENT_BUS.post(tagEvent);
-    	
+        TagEvent.SetTagEvent tagEvent = new TagEvent.SetTagEvent(stock.getUUID(), tag);
+        MinecraftForge.EVENT_BUS.post(tagEvent);
         stock.tag = tag;
     }
 
@@ -217,6 +384,20 @@ public class CommonAPI {
         return stock.getPosition().internal;
     }
 
+    public Object[] getPositionArray() {
+        Vec3d pos = getPosition();
+        return new Object[] { pos.x, pos.y, pos.z };
+    }
+    
+    public Object[] getSpeedPolar2D() {
+        if (stock instanceof EntityMoveableRollingStock) {
+            double CurrentSpeed = ((EntityMoveableRollingStock)stock).getCurrentSpeed().metric();
+            double CurrentAngle = stock.getRotationYaw();
+            return new Object[] {CurrentSpeed,CurrentAngle};
+        }
+        return null;
+    }   
+    
     public UUID getUniqueID() {
         return stock.getUUID();
     }

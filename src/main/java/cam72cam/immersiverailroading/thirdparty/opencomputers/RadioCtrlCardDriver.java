@@ -116,14 +116,15 @@ public class RadioCtrlCardDriver implements DriverItem {
 			return null;
 		}
 
-		@Callback(doc = "function() -- fires the locomotive horn")
+		@Callback(doc = "function([int]) -- fires the locomotive horn")
 		public Object[] horn(Context context, Arguments arguments) {
 			if (radioDrain()) {
 				api.setHorn(arguments.optInteger(0, 40));
 			}
 			return null;
 		}
-		@Callback(doc = "function() -- sets the locomotive bell")
+		
+		@Callback(doc = "function([int]) -- sets the locomotive bell")
 		public Object[] bell(Context context, Arguments arguments) {
 			if (radioDrain()) {
 				api.setBell(arguments.optInteger(0, 40));
@@ -140,12 +141,20 @@ public class RadioCtrlCardDriver implements DriverItem {
 			return null;
 		}
 
-		@Callback(doc = "function():araray -- returns the UUID of the bound loco")
+		@Callback(doc = "function():array -- returns the UUID of the bound loco")
 		public Object[] getLinkUUID(Context context, Arguments args) {
 			if (radioDrain()) {
 				return new Object[] { api.getUniqueID() };
 			}
 			return new Object[] { null };
+		}
+		
+		@Callback(doc = "function(string) -- get a property with name of the property")
+		public Object[] getProperty(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				return api.getProperty(arguments.checkString(0));
+			}
+			return null;
 		}
 	}
 }
