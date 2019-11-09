@@ -11,10 +11,11 @@ public class ImmersiveEngineering {
 		ItemStack casing = new ItemStack(IEContent.blockStoneDecoration,1, 2);
 		ItemStack light_eng = new ItemStack(IEContent.blockMetalDecoration,1, BlockMetalDecoration.META_lightEngineering);
 		ItemStack heavy_eng = new ItemStack(IEContent.blockMetalDecoration,1, BlockMetalDecoration.META_heavyEngineering);
+		ItemStack scaffold = new ItemStack(IEContent.blockMetalDecoration,1, BlockMetalDecoration.META_scaffolding);
 		IRFuzzy.IR_CASTING_CASING.add(casing);
 		IRFuzzy.IR_LIGHT_ENG.add(light_eng);
 		IRFuzzy.IR_HEAVY_ENG.add(heavy_eng);
-        IRFuzzy.IR_SCAFFOLDING.addAll("scaffoldingSteel");
+        IRFuzzy.IR_SCAFFOLDING.add(scaffold);
         IRFuzzy.IR_TIE.addAll("plankTreatedWood");
 	}
 }
