@@ -6,7 +6,7 @@ fi
 rm -rf TrackAPI
 git clone --branch $BRANCH git@github.com:TeamOpenIndustry/TrackAPI.git
 
-cat src/main/resources/pack.mcmeta<<EOT
+cat>src/main/resources/pack.mcmeta<<EOT
 {
   "pack": {
     "description": "IR resources",
