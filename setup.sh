@@ -14,3 +14,5 @@ cat>src/main/resources/pack.mcmeta<<EOT
   }
 }
 EOT
+
+echo "apply from: 'ImmersiveRailroadingIntegration/dependencies.gradle'" >> build.gradle
