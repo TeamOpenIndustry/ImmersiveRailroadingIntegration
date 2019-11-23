@@ -6,6 +6,7 @@ import cam72cam.immersiverailroading.IRItems;
 import cam72cam.immersiverailroading.entity.Locomotive;
 import cam72cam.immersiverailroading.thirdparty.CommonAPI;
 import cam72cam.mod.math.Vec3d;
+import cam72cam.mod.entity.ModdedEntity;
 import li.cil.oc.api.Network;
 import li.cil.oc.api.prefab.DriverItem;
 import li.cil.oc.api.driver.item.Slot;
@@ -35,10 +36,13 @@ public class RadioCtrlCardDriver extends DriverItem {
 		World hostWorld = host.world();
 		if (stack != null && stack.getItem() == IRItems.ITEM_RADIO_CONTROL_CARD.internal) {
 			for (Object e : hostWorld.loadedEntityList) {
-				if (e instanceof Locomotive) {
-					Locomotive train = (Locomotive) e;
-					if (train.getUUID().equals(UUID.fromString(stack.getTagCompound().getString("linked_uuid")))) {
-						return new RadioCtrlCardManager(train, host.xPosition(), host.yPosition(), host.zPosition());
+				if (e instanceof ModdedEntity) {
+					ModdedEntity me = (ModdedEntity) e;
+					if (me.getSelf() instanceof Locomotive) {
+						Locomotive train = (Locomotive) me.getSelf();
+						if (train.getUUID().equals(UUID.fromString(stack.getTagCompound().getString("linked_uuid")))) {
+							return new RadioCtrlCardManager(train, host.xPosition(), host.yPosition(), host.zPosition());
+						}
 					}
 				}
 			}
