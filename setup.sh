@@ -15,3 +15,5 @@ git clone --branch $BRANCH ${gitPfx}TeamOpenIndustry/TrackAPI.git
 sed -i src/main/java/cam72cam/immersiverailroading/Mod.java -e 's/required-before:universalmodcore/\0; required-after:trackapi@[1.1,)/'
 
 sed -i build.gradle -e "s,^dependencies {,apply from: 'ImmersiveRailroadingIntegration/dependencies.gradle'\n\0,"
+
+wget https://addons-origin.cursecdn.com/files/2269/339/ComputerCraft1.75.jar
