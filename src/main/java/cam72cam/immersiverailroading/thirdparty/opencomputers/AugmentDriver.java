@@ -185,7 +185,7 @@ public class AugmentDriver implements SidedBlock {
 		}
 	}
 
-	public class LocoControlAugment extends AugmentManagerBase {
+	public class LocoControlAugment extends DetectorAugment {
 		public LocoControlAugment(World world, BlockPos pos) {
 			super(world, pos);
 			typeFilter = Locomotive.class;
@@ -229,21 +229,6 @@ public class AugmentDriver implements SidedBlock {
 				api.setBell(arguments.optInteger(0, 40));
 			}
 			return null;
-		}
-
-		@Callback(doc = "function():string -- returns the current augment type")
-		public Object[] getAugmentType(Context context, Arguments args) {
-			TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
-			Augment augment = te.getAugment();
-			if (augment != null) {
-				return new Object[] { augment.toString() };
-			}
-			return null;
-		}
-		
-		@Callback(doc = "function():array -- returns the position of the augment")
-		public Object[] getPos(Context context, Arguments args) {
-			return new Object[] {this.pos.getX(), this.pos.getY(), this.pos.getZ()};
 		}
 	}
 }
