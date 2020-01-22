@@ -7,6 +7,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public class CompatLoader {
 	public static Object invokeStatic(String modID, String cname, String method, Object ...objects) {
 		if (FabricLoader.getInstance().isModLoaded(modID)) {
+			try {
 				Class<?> cls = Class.forName(cname);
 				return cls.getMethod(method).invoke(null, objects);
 			} catch (Exception ex) {
