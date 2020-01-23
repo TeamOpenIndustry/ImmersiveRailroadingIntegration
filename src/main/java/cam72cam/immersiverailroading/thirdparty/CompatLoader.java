@@ -43,6 +43,7 @@ public class CompatLoader {
 			case CONSTRUCT:
 				break;
 			case INITIALIZE:
+				invokeStatic("igwmod", "cam72cam.immersiverailroading.thirdparty.IGWMod", "init");
 				break;
 			case SETUP:
 				invokeStatic("immersiveengineering", "cam72cam.immersiverailroading.thirdparty.ImmersiveEngineering", "init");
@@ -50,7 +51,6 @@ public class CompatLoader {
 				invokeStatic("opencomputers", "cam72cam.immersiverailroading.thirdparty.opencomputers.Compat", "init");
 				break;
 			case FINALIZE:
-				invokeStatic("igwmod", "cam72cam.immersiverailroading.thirdparty.IGWMod", "init");
 				break;
 			case START:
 				break;
