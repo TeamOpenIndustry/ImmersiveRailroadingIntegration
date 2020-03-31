@@ -29,11 +29,11 @@ dependencies {
 	compile "curse.maven:trackapi:2825260"
 }
 
-
+/*
 java.nio.file.Path path = Paths.get("src/main/java/cam72cam/ImmersiveRailroading/Mod.java");
 Charset charset = StandardCharsets.UTF_8;
 
 String content = new String(Files.readAllBytes(path), charset);
 content = content.replaceAll("OTHERDEPENDENCIES", "TODO");
 Files.write(path, content.getBytes(charset));
-
+*/
