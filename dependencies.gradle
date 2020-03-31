@@ -11,7 +11,6 @@ sourceSets {
 	main {
 		java {
 			srcDir "ImmersiveRailroadingIntegration/src/main/java"
-			srcDir "TrackAPI/src/main/java"
 		}
 	}
 }
@@ -22,8 +21,6 @@ dependencies {
 	compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
 	compile "dan200.computercraft:ComputerCraft:1.80pr1-build3"
+	compile "curse.maven:trackapi:2825260"
 }
 
-jar {
-	exclude 'trackapi*'
-}
