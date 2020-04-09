@@ -10,7 +10,7 @@ String content = new String(Files.readAllBytes(path), charset);
 content = content.replaceAll("\\)\", ", "); required-after:trackapi@[1.1,)\", ");
 Files.write(path, content.getBytes(charset));
 
-path = Paths.get(System.getProperty("user.dir"), "src/main/resources/META_INF/mods.toml");
+path = Paths.get(System.getProperty("user.dir"), "src/main/resources/META-INF/mods.toml");
 content = new String(Files.readAllBytes(path), charset);
 content += "\n[[dependencies.trackapi]]\nmodId=\"trackapi\"\nmandatory=true\nversionRange=\"[1.2,)\"\nordering=\"AFTER\"\nside=\"BOTH\"";
 Files.write(path, content.getBytes(charset));
