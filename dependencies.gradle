@@ -15,5 +15,5 @@ sourceSets {
 
 dependencies {
 	compileOnly "org.squiddev:cc-tweaked-1.14.4:1.85.0"
-	compile "curse.maven:trackapi:2825261"
+	compile fg.deobf("curse.maven:trackapi:2825261")
 }
