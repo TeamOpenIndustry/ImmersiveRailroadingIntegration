@@ -9,15 +9,11 @@ sourceSets {
 	main {
 		java {
 			srcDir "ImmersiveRailroadingIntegration/src/main/java"
-			srcDir "TrackAPI/src/main/java"
 		}
 	}
 }
 
 dependencies {
 	compileOnly "org.squiddev:cc-tweaked-1.14.4:1.85.0"
-}
-
-jar {
-	exclude 'trackapi*'
+	compile "curse.maven:trackapi:2825260"
 }
