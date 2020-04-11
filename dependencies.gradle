@@ -2,7 +2,6 @@ sourceSets {
 	main {
 		java {
 			srcDir "ImmersiveRailroadingIntegration/src/main/java"
-			srcDir "TrackAPI/src/main/java"
 		}
 	}
 }
@@ -42,8 +41,5 @@ dependencies {
 	 modImplementation ("me.shedaniel:RoughlyEnoughItems:3.0-pre+build.1") {
         exclude group: "io.github.prospector.modmenu", module: "ModMenu"
     }
-}
-
-jar {
-	exclude 'trackapi*'
+	compile "curse.maven:trackapi:282613"
 }
