@@ -21,6 +21,8 @@ repositories {
         name = "BuildCraft"
         url = "https://mod-buildcraft.com/maven"
     }
+
+    maven { url = "http://server.bbkr.space:8081/artifactory/libs-snapshot" }
 }
 
 dependencies {
@@ -41,5 +43,5 @@ dependencies {
 	 modImplementation ("me.shedaniel:RoughlyEnoughItems:3.0-pre+build.1") {
         exclude group: "io.github.prospector.modmenu", module: "ModMenu"
     }
-	compile "curse.maven:trackapi:282613"
+	modCompile "curse.maven:trackapi:2825262"
 }
