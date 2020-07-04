@@ -1,25 +1,24 @@
 package cam72cam.immersiverailroading.thirdparty.opencomputers;
 
-import java.util.*;
 import cam72cam.immersiverailroading.Config;
 import cam72cam.immersiverailroading.IRItems;
 import cam72cam.immersiverailroading.entity.Locomotive;
+import cam72cam.immersiverailroading.items.ItemRadioCtrlCard;
 import cam72cam.immersiverailroading.thirdparty.CommonAPI;
 import cam72cam.mod.math.Vec3d;
-import cam72cam.mod.entity.ModdedEntity;
 import li.cil.oc.api.Network;
 import li.cil.oc.api.prefab.DriverItem;
 import li.cil.oc.api.driver.item.Slot;
 import li.cil.oc.api.machine.Arguments;
 import li.cil.oc.api.machine.Callback;
 import li.cil.oc.api.machine.Context;
+import li.cil.oc.api.network.ComponentConnector;
+import li.cil.oc.api.network.EnvironmentHost;
+import li.cil.oc.api.network.ManagedEnvironment;
 import li.cil.oc.api.network.Visibility;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import li.cil.oc.api.network.ComponentConnector;
-import li.cil.oc.api.network.EnvironmentHost;
-import li.cil.oc.api.network.ManagedEnvironment;
 
 public class RadioCtrlCardDriver extends DriverItem {
 
@@ -34,20 +33,22 @@ public class RadioCtrlCardDriver extends DriverItem {
 	@Override
 	public ManagedEnvironment createEnvironment(ItemStack stack, EnvironmentHost host) {
 		World hostWorld = host.world();
-		if (stack != null && stack.getItem() == IRItems.ITEM_RADIO_CONTROL_CARD.internal) {
-			for (Object e : hostWorld.loadedEntityList) {
-				if (e instanceof ModdedEntity) {
-					ModdedEntity me = (ModdedEntity) e;
-					if (me.getSelf() instanceof Locomotive) {
-						Locomotive train = (Locomotive) me.getSelf();
-						if (train.getUUID().equals(UUID.fromString(stack.getTagCompound().getString("linked_uuid")))) {
-							return new RadioCtrlCardManager(train, host.xPosition(), host.yPosition(), host.zPosition());
-						}
-					}
-				}
-			}
+		if (stack == null || stack.getItem() != IRItems.ITEM_RADIO_CONTROL_CARD.internal) {
+			return null;
 		}
-		return null;
+
+		ItemRadioCtrlCard.Data data = new ItemRadioCtrlCard.Data(new cam72cam.mod.item.ItemStack(stack));
+		if (data.linked == null) {
+			return null;
+		}
+
+		cam72cam.mod.world.World world = cam72cam.mod.world.World.get(hostWorld);
+		Locomotive found = world.getEntity(data.linked, Locomotive.class);
+		if (found == null) {
+			return null;
+		}
+
+		return new RadioCtrlCardManager(found, host.xPosition(), host.yPosition(), host.zPosition());
 	}
 
 	@Override
