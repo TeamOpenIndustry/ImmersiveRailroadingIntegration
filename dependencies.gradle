@@ -1,6 +1,10 @@
 repositories {
     maven { url = "http://maven.cil.li/" }
 	maven { url = "https://cc.crzd.me/maven/" }
+	maven {
+		name = "CurseForge"
+		url = "https://minecraft.curseforge.com/api/maven/"
+	}
 }
 
 sourceSets {
