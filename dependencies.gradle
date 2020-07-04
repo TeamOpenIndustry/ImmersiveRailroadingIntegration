@@ -20,6 +20,6 @@ dependencies {
 	compile "li.cil.oc:OpenComputers:MC1.11.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.11.2-1.7.+"
 	compile "dan200.computercraft:ComputerCraft-SquidDev-CC-ComputerCraft-feature-minecraft-1.11.2:1.80pr1-build4"
-	compile "curse.maven:trackapi:2825260"
+	compile "curse.maven:trackapi:2825259"
 }
 
