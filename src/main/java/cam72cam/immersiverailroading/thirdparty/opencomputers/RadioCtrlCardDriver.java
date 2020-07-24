@@ -90,6 +90,14 @@ public class RadioCtrlCardDriver implements DriverItem {
 			// Node node = this.node();
 		}
 
+        @Callback(doc = "function(number) -- gets the locomotive throttle")
+        public Object[] getThrottle(Context context, Arguments arguments) {
+            if (radioDrain()) {
+                return new Object[]{api.getThrottle()};
+            }
+            return new Object[]{null};
+        }
+
 		@Callback(doc = "function(double) -- sets the locomotive throttle")
 		public Object[] setThrottle(Context context, Arguments arguments) {
 			if (radioDrain()) {
@@ -112,6 +120,14 @@ public class RadioCtrlCardDriver implements DriverItem {
 			}
 			return false;
 		}
+
+        @Callback(doc = "function():number -- gets the locomotive brake")
+        public Object[] getBrake(Context context, Arguments arguments) {
+            if (radioDrain()) {
+                return new Object[]{api.getAirBrake()};
+            }
+            return new Object[]{null};
+        }
 
 		@Callback(doc = "function(double) -- sets the locomotive brake")
 		public Object[] setBrake(Context context, Arguments arguments) {
