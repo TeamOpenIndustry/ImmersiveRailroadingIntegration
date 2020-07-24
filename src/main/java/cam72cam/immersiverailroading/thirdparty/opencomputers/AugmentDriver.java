@@ -152,7 +152,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 		
-		@Callback(doc = "function():table -- gets the stock's tag")
+		@Callback(doc = "function():string -- gets the stock's tag")
 		public Object[] getTag(Context context, Arguments arguments) {
 			CommonAPI api = CommonAPI.create(world, pos);
 			if (api != null) {
@@ -161,7 +161,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 		
-		@Callback(doc = "function():table -- sets the stock's tag")
+		@Callback(doc = "function(tag: string) -- sets the stock's tag")
 		public Object[] setTag(Context context, Arguments arguments) {
 			CommonAPI api = CommonAPI.create(world, pos);
 			if (api != null) {
@@ -197,7 +197,7 @@ public class AugmentDriver implements DriverBlock {
 			return "ir_augment_control";
 		}
 
-		@Callback(doc = "function(double) -- sets the locomotive throttle")
+		@Callback(doc = "function(level: number) -- sets the locomotive throttle")
 		public Object[] setThrottle(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {
@@ -206,7 +206,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 
-		@Callback(doc = "function(double) -- sets the locomotive brake")
+		@Callback(doc = "function(level: number) -- sets the locomotive brake")
 		public Object[] setBrake(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {
@@ -215,7 +215,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 
-		@Callback(doc = "function() -- fires the locomotive horn")
+		@Callback(doc = "function([time: number]) -- fires the locomotive horn")
 		public Object[] horn(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {
@@ -223,7 +223,8 @@ public class AugmentDriver implements DriverBlock {
 			}
 			return null;
 		}
-		@Callback(doc = "function() -- sets the locomotive bell")
+
+		@Callback(doc = "function([time: number]) -- sets the locomotive bell")
 		public Object[] bell(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {

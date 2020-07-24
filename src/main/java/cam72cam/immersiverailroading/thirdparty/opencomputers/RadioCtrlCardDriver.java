@@ -90,7 +90,7 @@ public class RadioCtrlCardDriver implements DriverItem {
 			// Node node = this.node();
 		}
 
-        @Callback(doc = "function(number) -- gets the locomotive throttle")
+        @Callback(doc = "function():number -- gets the locomotive throttle")
         public Object[] getThrottle(Context context, Arguments arguments) {
             if (radioDrain()) {
                 return new Object[]{api.getThrottle()};
@@ -98,7 +98,7 @@ public class RadioCtrlCardDriver implements DriverItem {
             return new Object[]{null};
         }
 
-		@Callback(doc = "function(double) -- sets the locomotive throttle")
+		@Callback(doc = "function(level: number) -- sets the locomotive throttle")
 		public Object[] setThrottle(Context context, Arguments arguments) {
 			if (radioDrain()) {
 				api.setThrottle(arguments.checkDouble(0));
@@ -129,7 +129,7 @@ public class RadioCtrlCardDriver implements DriverItem {
             return new Object[]{null};
         }
 
-		@Callback(doc = "function(double) -- sets the locomotive brake")
+		@Callback(doc = "function(level: number) -- sets the locomotive brake")
 		public Object[] setBrake(Context context, Arguments arguments) {
 			if (radioDrain()) {
 				api.setAirBrake(arguments.checkDouble(0));
@@ -137,14 +137,14 @@ public class RadioCtrlCardDriver implements DriverItem {
 			return null;
 		}
 
-		@Callback(doc = "function() -- fires the locomotive horn")
+		@Callback(doc = "function([time: number]) -- fires the locomotive horn")
 		public Object[] horn(Context context, Arguments arguments) {
 			if (radioDrain()) {
 				api.setHorn(arguments.optInteger(0, 40));
 			}
 			return null;
 		}
-		@Callback(doc = "function() -- sets the locomotive bell")
+		@Callback(doc = "function([time: number]) -- sets the locomotive bell")
 		public Object[] bell(Context context, Arguments arguments) {
 			if (radioDrain()) {
 				api.setBell(arguments.optInteger(0, 40));
@@ -161,7 +161,7 @@ public class RadioCtrlCardDriver implements DriverItem {
 			return null;
 		}
 
-		@Callback(doc = "function():araray -- returns the UUID of the bound loco")
+		@Callback(doc = "function():string -- returns the UUID of the bound locomotive")
 		public Object[] getLinkUUID(Context context, Arguments args) {
 			if (radioDrain()) {
 				return new Object[] { api.getUniqueID() };
@@ -169,7 +169,7 @@ public class RadioCtrlCardDriver implements DriverItem {
 			return new Object[] { null };
 		}
 
-        @Callback(doc = "function():table -- returns an info dump about the current car")
+        @Callback(doc = "function():table -- returns an info dump about bound locomotive")
         public Object[] info(Context context, Arguments arguments) {
             if (radioDrain()) {
                 return new Object[]{
@@ -179,7 +179,7 @@ public class RadioCtrlCardDriver implements DriverItem {
             return null;
         }
 
-        @Callback(doc = "function():table -- returns an info dump about the current consist")
+        @Callback(doc = "function():table -- returns an info dump about the current bound consist")
         public Object[] consist(Context context, Arguments arguments) {
             if (radioDrain()) {
                 return new Object[]{
