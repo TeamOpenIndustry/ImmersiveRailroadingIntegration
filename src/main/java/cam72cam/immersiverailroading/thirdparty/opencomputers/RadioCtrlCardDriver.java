@@ -168,5 +168,26 @@ public class RadioCtrlCardDriver implements DriverItem {
 			}
 			return new Object[] { null };
 		}
+
+        @Callback(doc = "function():table -- returns an info dump about the current car")
+        public Object[] info(Context context, Arguments arguments) {
+            if (radioDrain()) {
+                return new Object[]{
+                        api.info()
+                };
+            }
+            return null;
+        }
+
+        @Callback(doc = "function():table -- returns an info dump about the current consist")
+        public Object[] consist(Context context, Arguments arguments) {
+            if (radioDrain()) {
+                return new Object[]{
+                        api.consist(true)
+                };
+            }
+            return null;
+        }
+
 	}
 }
