@@ -189,5 +189,13 @@ public class RadioCtrlCardDriver implements DriverItem {
             return null;
         }
 
+        @Callback(doc = "function():table -- gets the stock's tag")
+        public Object[] getTag(Context context, Arguments arguments) {
+            if (radioDrain()) {
+                return new Object[]{api.getTag()};
+            }
+            return null;
+        }
+
 	}
 }
