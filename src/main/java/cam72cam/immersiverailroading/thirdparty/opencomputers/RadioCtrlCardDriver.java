@@ -152,5 +152,22 @@ public class RadioCtrlCardDriver implements DriverItem {
 			}
 			return new Object[] { null };
 		}
+
+        @Callback(doc = "function():boolean or nil -- gets the ignition state of bound diesel locomotive")
+        public Object[] getIgnition(Context context, Arguments arguments) {
+            if (radioDrain()) {
+                return new Object[]{api.getIgnition()};
+            }
+            return null;
+        }
+
+		@Callback(doc = "function(boolean: on) -- sets the ignition of the bound diesel locomotive")
+		public Object[] setIgnition(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				api.setIgnition(arguments.checkBoolean(0));
+			}
+			return null;
+		}
+
 	}
 }
