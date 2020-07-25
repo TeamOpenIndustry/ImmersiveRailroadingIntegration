@@ -130,7 +130,7 @@ public class AugmentDriver implements DriverBlock {
 			return "ir_augment_detector";
 		}
 		
-		@Callback(doc = "function():table -- returns an info dump about the current car")
+		@Callback(doc = "function():table or nil -- returns an info dump about the current stock")
 		public Object[] info(Context context, Arguments arguments) {
 			CommonAPI api = CommonAPI.create(world, pos);
 			if (api != null) {
@@ -141,7 +141,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 		
-		@Callback(doc = "function():table -- returns an info dump about the current consist")
+		@Callback(doc = "function():table or nil -- returns an info dump about the current consist")
 		public Object[] consist(Context context, Arguments arguments) {
 			CommonAPI api = CommonAPI.create(world, pos);
 			if (api != null) {
@@ -152,7 +152,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 		
-		@Callback(doc = "function():string -- gets the stock's tag")
+		@Callback(doc = "function():string or nil -- gets the current stock's tag")
 		public Object[] getTag(Context context, Arguments arguments) {
 			CommonAPI api = CommonAPI.create(world, pos);
 			if (api != null) {
@@ -161,7 +161,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 		
-		@Callback(doc = "function(tag: string) -- sets the stock's tag")
+		@Callback(doc = "function(tag: string) -- sets the current stock's tag")
 		public Object[] setTag(Context context, Arguments arguments) {
 			CommonAPI api = CommonAPI.create(world, pos);
 			if (api != null) {
@@ -170,7 +170,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 
-		@Callback(doc = "function():string -- returns the current augment type")
+		@Callback(doc = "function():string -- returns the augment type")
 		public Object[] getAugmentType(Context context, Arguments args) {
 			TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
 			Augment augment = te.getAugment();
@@ -197,7 +197,7 @@ public class AugmentDriver implements DriverBlock {
 			return "ir_augment_control";
 		}
 
-		@Callback(doc = "function(level: number) -- sets the locomotive throttle")
+		@Callback(doc = "function(level: number) -- sets the current locomotive's throttle")
 		public Object[] setThrottle(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {
@@ -206,7 +206,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 
-		@Callback(doc = "function(level: number) -- sets the locomotive brake")
+		@Callback(doc = "function(level: number) -- sets the current locomotive's brake")
 		public Object[] setBrake(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {
@@ -215,7 +215,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 
-		@Callback(doc = "function([time: number]) -- fires the locomotive horn")
+		@Callback(doc = "function([time: number]) -- fires the current locomotive's horn")
 		public Object[] horn(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {
@@ -224,7 +224,7 @@ public class AugmentDriver implements DriverBlock {
 			return null;
 		}
 
-		@Callback(doc = "function([time: number]) -- sets the locomotive bell")
+		@Callback(doc = "function([time: number]) -- rings the current locomotive's bell")
 		public Object[] bell(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {
@@ -232,5 +232,6 @@ public class AugmentDriver implements DriverBlock {
 			}
 			return null;
 		}
+
 	}
 }
