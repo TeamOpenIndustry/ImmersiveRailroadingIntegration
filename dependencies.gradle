@@ -13,6 +13,14 @@ sourceSets {
 			srcDir "ImmersiveRailroadingIntegration/src/main/java"
 		}
 	}
+	test {
+		java {
+			srcDir "ImmersiveRailroadingIntegration/src/test/java"
+		}
+		groovy {
+			srcDir "ImmersiveRailroadingIntegration/src/test/groovy"
+		}
+	}
 }
 
 dependencies {
