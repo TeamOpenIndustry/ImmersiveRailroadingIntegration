@@ -5,6 +5,9 @@ import cam72cam.mod.block.tile.TileEntityTickable;
 import cam72cam.mod.resource.Identifier;
 
 public class TileEntityTickableTrack extends TileEntityTickable implements trackapi.lib.ITrack {
+    static {
+        registerTileEntity(TileEntityTickableTrack.class, new Identifier(ModCore.MODID, "tile_track"));
+    }
 
     public TileEntityTickableTrack() {
         super();
@@ -26,10 +29,5 @@ public class TileEntityTickableTrack extends TileEntityTickable implements track
     @Override
     public net.minecraft.util.math.Vec3d getNextPosition(net.minecraft.util.math.Vec3d pos, net.minecraft.util.math.Vec3d mot) {
         return track() != null ? track().getNextPosition(pos, mot) : pos;
-    }
-
-    @Override
-    public Identifier getName() {
-        return new Identifier(ModCore.MODID, "tile_track");
     }
 }
