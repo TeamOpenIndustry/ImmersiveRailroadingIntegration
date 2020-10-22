@@ -29,7 +29,12 @@ public interface ITrack {
     }
 
     static ITrack get(World world, Vec3d pos, boolean allowMCRail) {
-        return from(Util.getTileEntity(world.internal, pos.internal(), allowMCRail));
+        trackapi.lib.ITrack track = Util.getTileEntity(world.internal, pos.internal(), allowMCRail);
+        if (track instanceof TileEntityTickableTrack) {
+            // shortcut Vec3d wrapping
+            return ((ITrack)((TileEntityTickableTrack) track).instance());
+        }
+        return from(track);
     }
 
     double getTrackGauge();
