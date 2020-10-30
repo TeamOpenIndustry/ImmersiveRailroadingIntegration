@@ -214,7 +214,7 @@ public class CommonAPI {
     }
 
     public Vec3d getPosition() {
-        return stock.getPosition().internal;
+        return stock.getPosition().internal();
     }
 
     public UUID getUniqueID() {

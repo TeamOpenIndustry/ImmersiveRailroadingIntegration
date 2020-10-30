@@ -2,6 +2,7 @@ package cam72cam.immersiverailroading.thirdparty;
 
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.mod.ModEvent;
+import cam72cam.mod.event.CommonEvents;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 
@@ -25,10 +26,12 @@ public class CompatLoader {
         return false;
     }
 
+    public static void register() {
+		CommonEvents.Block.REGISTER.subscribe(Legacy::registerBlocks);
+	}
+
 	public static void common(ModEvent event) {
 		switch (event) {
-			case CONSTRUCT:
-				break;
 			case INITIALIZE:
 				invokeStatic("igwmod", "cam72cam.immersiverailroading.thirdparty.IGWMod", "init");
 				break;
