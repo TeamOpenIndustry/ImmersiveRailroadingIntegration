@@ -39,12 +39,11 @@ public class CompatLoader {
 		return false;
     }
 
-    public static void register() {
-		CommonEvents.Block.REGISTER.subscribe(Legacy::registerBlocks);
-	}
-
 	public static void common(ModEvent event) {
 		switch (event) {
+			case CONSTRUCT:
+				CommonEvents.Block.REGISTER.subscribe(Legacy::registerBlocks);
+				break;
 			case INITIALIZE:
 				invokeStatic("igwmod", "cam72cam.immersiverailroading.thirdparty.IGWMod", "init");
 				break;
