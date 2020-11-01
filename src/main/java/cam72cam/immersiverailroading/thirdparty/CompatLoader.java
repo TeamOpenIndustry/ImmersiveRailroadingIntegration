@@ -3,6 +3,7 @@ package cam72cam.immersiverailroading.thirdparty;
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cpw.mods.fml.common.Loader;
 import cam72cam.mod.ModEvent;
+import cam72cam.mod.event.CommonEvents;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,6 +28,7 @@ public class CompatLoader {
 	public static void common(ModEvent event) {
 		switch (event) {
 			case CONSTRUCT:
+				CommonEvents.Block.REGISTER.subscribe(Legacy::registerBlocks);
 				break;
 			case INITIALIZE:
 				invokeStatic("igwmod", "cam72cam.immersiverailroading.thirdparty.IGWMod", "init");

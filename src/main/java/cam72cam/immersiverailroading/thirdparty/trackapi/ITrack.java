@@ -23,14 +23,19 @@ public interface ITrack {
 
             @Override
             public Vec3d getNextPosition(Vec3d pos, Vec3d vel) {
-                Vec3 next = track.getNextPosition(pos.internal, vel.internal);
+                Vec3 next = track.getNextPosition(pos.internal(), vel.internal());
                 return next != null ? new Vec3d(next) : null;
             }
         };
     }
 
     static ITrack get(World world, Vec3d pos, boolean allowMCRail) {
-        return from(Util.getTileEntity(world.internal, pos.internal, allowMCRail));
+        trackapi.lib.ITrack track = Util.getTileEntity(world.internal, pos.internal(), allowMCRail);
+        if (track instanceof TileEntityTickableTrack) {
+            // shortcut Vec3d wrapping
+            return ((ITrack)((TileEntityTickableTrack) track).instance());
+        }
+        return from(track);
     }
 
     double getTrackGauge();
@@ -47,7 +52,7 @@ public interface ITrack {
             @Override
             public Vec3 getNextPosition(Vec3 pos, Vec3 vel) {
                 Vec3d next = ITrack.this.getNextPosition(new Vec3d(pos), new Vec3d(vel));
-                return next != null ? next.internal : null;
+                return next != null ? next.internal() : null;
             }
         };
     }
