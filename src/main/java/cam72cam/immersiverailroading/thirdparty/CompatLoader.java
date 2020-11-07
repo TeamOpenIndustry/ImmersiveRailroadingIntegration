@@ -3,6 +3,7 @@ package cam72cam.immersiverailroading.thirdparty;
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import net.minecraftforge.fml.ModList;
 import cam72cam.mod.ModEvent;
+import cam72cam.mod.event.CommonEvents;
 
 public class CompatLoader {
 	public static Object invokeStatic(String modID, String cname, String method, Object ...objects) {
@@ -26,9 +27,9 @@ public class CompatLoader {
 			case CONSTRUCT:
 				break;
 			case INITIALIZE:
-				invokeStatic("igwmod", "cam72cam.immersiverailroading.thirdparty.IGWMod", "init");
 				break;
 			case SETUP:
+				invokeStatic("immersiveengineering", "cam72cam.immersiverailroading.thirdparty.ImmersiveEngineering", "init");
 				invokeStatic("computercraft", "cam72cam.immersiverailroading.thirdparty.ComputerCraft", "init");
 				break;
 			case FINALIZE:
