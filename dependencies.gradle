@@ -16,8 +16,8 @@ sourceSets {
 repositories { flatDir { dirs '../TrackAPI/build/libs' } }
 
 dependencies {
-	compileOnly "org.squiddev:cc-tweaked-1.15.2:1.94.0"
+	compileOnly "org.squiddev:cc-tweaked-1.16.4:1.94.0"
 	//compile fg.deobf("curse.maven:trackapi:2825261")
 	compile fg.deobf(name: 'TrackAPI-1.2')
-	compile fg.deobf("curse.maven:immersiveengineering:3071956")
+	compile fg.deobf("curse.maven:immersiveengineering:3102280")
 }

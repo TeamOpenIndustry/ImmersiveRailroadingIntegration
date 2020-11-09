@@ -22,7 +22,7 @@ public interface ITrack {
 
             @Override
             public Vec3d getNextPosition(Vec3d pos, Vec3d vel) {
-                net.minecraft.util.math.Vec3d next = track.getNextPosition(pos.internal(), vel.internal());
+                net.minecraft.util.math.vector.Vector3d next = track.getNextPosition(pos.internal(), vel.internal());
                 return next != null ? new Vec3d(next) : null;
             }
         };
@@ -49,7 +49,7 @@ public interface ITrack {
             }
 
             @Override
-            public net.minecraft.util.math.Vec3d getNextPosition(net.minecraft.util.math.Vec3d pos, net.minecraft.util.math.Vec3d vel) {
+            public net.minecraft.util.math.vector.Vector3d getNextPosition(net.minecraft.util.math.vector.Vector3d pos, net.minecraft.util.math.vector.Vector3d vel) {
                 Vec3d next = ITrack.this.getNextPosition(new Vec3d(pos), new Vec3d(vel));
                 return next != null ? next.internal() : null;
             }

@@ -9,7 +9,7 @@ import cam72cam.mod.math.Vec3i;
 import cam72cam.immersiverailroading.thirdparty.event.TagEvent;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
@@ -213,7 +213,7 @@ public class CommonAPI {
         }
     }
 
-    public Vec3d getPosition() {
+    public Vector3d getPosition() {
         return stock.getPosition().internal();
     }
 

@@ -19,7 +19,7 @@ public class TileEntityTickableTrack extends TileEntityTickable implements track
     }
 
     @Override
-    public net.minecraft.util.math.Vec3d getNextPosition(net.minecraft.util.math.Vec3d pos, net.minecraft.util.math.Vec3d mot) {
+    public net.minecraft.util.math.vector.Vector3d getNextPosition(net.minecraft.util.math.vector.Vector3d pos, net.minecraft.util.math.vector.Vector3d mot) {
         return track() != null ? track().getNextPosition(pos, mot) : pos;
     }
 }
