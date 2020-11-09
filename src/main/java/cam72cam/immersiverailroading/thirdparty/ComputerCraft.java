@@ -5,14 +5,18 @@ import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.math.Vec3i;
 import dan200.computercraft.api.ComputerCraftAPI;
+import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
+import dan200.computercraft.api.lua.MethodResult;
 import dan200.computercraft.api.peripheral.IComputerAccess;
+import dan200.computercraft.api.peripheral.IDynamicPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheralProvider;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,17 +27,17 @@ public class ComputerCraft {
         ComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
             @Nullable
             @Override
-            public IPeripheral getPeripheral(@Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull Direction enumFacing) {
+            public LazyOptional<IPeripheral> getPeripheral(@Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull Direction enumFacing) {
                 TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
-                        return new DetectorPeripheral(world, blockPos);
+                        return LazyOptional.of(() -> new DetectorPeripheral(world, blockPos));
                     }
                     if (rail.getAugment() == Augment.LOCO_CONTROL) {
-                        return new LocoControlPeripheral(world, blockPos);
+                        return LazyOptional.of(() -> new LocoControlPeripheral(world, blockPos));
                     }
                 }
-                return null;
+                return LazyOptional.empty();
             }
         });
     }
@@ -43,7 +47,7 @@ public class ComputerCraft {
         Object[] apply(CommonAPI api, Object[] params) throws LuaException;
     }
 
-    private static abstract class BasePeripheral implements IPeripheral {
+    private static abstract class BasePeripheral implements IDynamicPeripheral {
         private final World world;
         private final BlockPos pos;
         private final String[] fnNames;
@@ -56,6 +60,7 @@ public class ComputerCraft {
             this.fnImpls = methods.values().toArray(new APICall[0]);
         }
 
+
         @Nonnull
         @Override
         public String[] getMethodNames() {
@@ -64,11 +69,11 @@ public class ComputerCraft {
 
         @Nullable
         @Override
-        public Object[] callMethod(@Nonnull IComputerAccess iComputerAccess, @Nonnull ILuaContext iLuaContext, int i, @Nonnull Object[] objects) throws LuaException, InterruptedException {
+        public MethodResult callMethod(@Nonnull IComputerAccess iComputerAccess, @Nonnull ILuaContext iLuaContext, int i, @Nonnull IArguments objects) {
             try {
                 CommonAPI api = CommonAPI.create(world, pos);
                 if (api != null && i < fnImpls.length) {
-                    return fnImpls[i].apply(api, objects);
+                    return MethodResult.of(fnImpls[i].apply(api, objects.getAll()));
                 }
             } catch (Exception ex) {
                 ImmersiveRailroading.catching(ex);
