@@ -6,7 +6,7 @@ import cam72cam.mod.block.tile.TileEntityTickable;
 import cam72cam.mod.resource.Identifier;
 
 public abstract class BlockEntityTrackTickable extends BlockEntityTickable implements ITrack {
-    protected TileEntity supplier(Identifier id) {
+    public TileEntity supplier(Identifier id) {
         return new TileEntityTickableTrack(id);
     }
 }
