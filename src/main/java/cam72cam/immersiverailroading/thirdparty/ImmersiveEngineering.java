@@ -3,6 +3,7 @@ package cam72cam.immersiverailroading.thirdparty;
 import blusunrize.immersiveengineering.api.IETags;
 import blusunrize.immersiveengineering.common.blocks.IEBlocks;
 import blusunrize.immersiveengineering.common.blocks.metal.MetalScaffoldingType;
+import blusunrize.immersiveengineering.common.blocks.wooden.TreatedWoodStyles;
 import cam72cam.immersiverailroading.util.IRFuzzy;
 import cam72cam.mod.item.Fuzzy;
 import cam72cam.mod.item.ItemStack;
@@ -19,6 +20,6 @@ public class ImmersiveEngineering {
 		IRFuzzy.IR_LIGHT_ENG.add(light_eng);
 		IRFuzzy.IR_HEAVY_ENG.add(heavy_eng);
         IRFuzzy.IR_SCAFFOLDING.add(scaffold);
-        IRFuzzy.IR_TIE.include(Fuzzy.get(IETags.treatedWood.getName().toString()));
+		IRFuzzy.IR_TIE.add(new ItemStack(new net.minecraft.item.ItemStack(IEBlocks.WoodenDecoration.treatedWood.get(TreatedWoodStyles.HORIZONTAL))));
 	}
 }
