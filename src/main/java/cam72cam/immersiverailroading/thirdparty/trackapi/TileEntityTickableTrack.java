@@ -5,6 +5,10 @@ import cam72cam.mod.block.tile.TileEntityTickable;
 import cam72cam.mod.resource.Identifier;
 
 public class TileEntityTickableTrack extends TileEntityTickable implements trackapi.lib.ITrack {
+    static {
+        registerLegacyTE(new Identifier(ModCore.MODID, "tile_track"));
+    }
+
     public TileEntityTickableTrack(Identifier id) {
         super(id);
     }
