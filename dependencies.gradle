@@ -1,10 +1,19 @@
+import cam72cam.universalmodcore.CurseForge;
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "https://teamopenindustry.cc/maven" }
+    }
+    dependencies {
+        classpath 'cam72cam.universalmodcore:UniversalModCoreGradle:0.1.3'
+    }
+}
+
+
 repositories {
     maven { url = "http://maven.cil.li/" }
 	maven { url = "https://cc.crzd.me/maven/" }
-	maven {
-		name = "CurseForge"
-		url = "https://minecraft.curseforge.com/api/maven/"
-	}
 }
 
 sourceSets {
@@ -16,10 +25,10 @@ sourceSets {
 }
 
 dependencies {
-	compile 'immersive-engineering:ImmersiveEngineering:0.12:74'
-	compile "curse.maven:igwmod:2551739"
+	compile files(CurseForge.asset(231951, 2488414)) // Immersive Engineering
+	compile files(CurseForge.asset(223815, 2551739)) // IGWMod
 	compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
 	compile "dan200.computercraft:ComputerCraft:1.80pr1-build3"
-	compile "curse.maven:trackapi:2825260"
+	compile files(CurseForge.asset(282613, 2825260)) // TrackAPI
 }
