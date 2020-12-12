@@ -29,6 +29,6 @@ dependencies {
 	compile "li.cil.oc:OpenComputers:MC1.11.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.11.2-1.7.+"
 	compile "dan200.computercraft:ComputerCraft-SquidDev-CC-ComputerCraft-feature-minecraft-1.11.2:1.80pr1-build4"
-	compile files(CurseForge.asset(282613, 2825259)) // TrackAPI
+	compile "trackapi:TrackAPI:1.11.2-forge-1.2"
 }
 
