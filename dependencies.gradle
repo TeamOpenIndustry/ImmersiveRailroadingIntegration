@@ -1,3 +1,16 @@
+import cam72cam.universalmodcore.CurseForge;
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "https://teamopenindustry.cc/maven" }
+    }
+    dependencies {
+        classpath 'cam72cam.universalmodcore:UniversalModCoreGradle:0.1.3'
+    }
+}
+
+
 repositories {
 	maven {
 		name = "SquidDev"
@@ -13,11 +26,9 @@ sourceSets {
 	}
 }
 
-repositories { flatDir { dirs '../TrackAPI/build/libs' } }
-
 dependencies {
 	compileOnly "org.squiddev:cc-tweaked-1.16.4:1.94.0"
 	//compile fg.deobf("curse.maven:trackapi:2825261")
-	compile fg.deobf(name: 'TrackAPI-1.2')
+	compile "trackapi:TrackAPI:1.16.4-forge-1.2"
 	compile fg.deobf("curse.maven:immersiveengineering:3102280")
 }
