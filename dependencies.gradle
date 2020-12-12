@@ -28,7 +28,6 @@ sourceSets {
 
 dependencies {
 	compileOnly "org.squiddev:cc-tweaked-1.15.2:1.94.0"
-	//compile fg.deobf("curse.maven:trackapi:2825261")
+	compileOnly files(CurseForge.asset(231951, 3071956)) // Immersive Engineering
 	compile "trackapi:TrackAPI:1.15.2-forge-1.2"
-	compile files(CurseForge.asset(231951, 3071956)) // Immersive Engineering
 }
