@@ -29,5 +29,5 @@ sourceSets {
 dependencies {
 	compileOnly "org.squiddev:cc-tweaked-1.14.4:1.85.0"
 	compile fg.deobf(files(CurseForge.asset(231951, 3045695))) // Immersive Engineering
-	compile fg.deobf(files(CurseForge.asset(282613, 2825261))) // TrackAPI
+	compile "trackapi:TrackAPI:1.14.4-forge-1.2"
 }
