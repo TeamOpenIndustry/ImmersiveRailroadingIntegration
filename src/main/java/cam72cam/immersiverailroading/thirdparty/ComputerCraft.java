@@ -31,10 +31,10 @@ public class ComputerCraft {
                 TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
-                        return LazyOptional.of(() -> new DetectorPeripheral(world, blockPos));
+                        return LazyOptional.of(() -> new DetectorPeripheral(world, rail));
                     }
                     if (rail.getAugment() == Augment.LOCO_CONTROL) {
-                        return LazyOptional.of(() -> new LocoControlPeripheral(world, blockPos));
+                        return LazyOptional.of(() -> new LocoControlPeripheral(world, rail));
                     }
                 }
                 return LazyOptional.empty();
@@ -49,13 +49,13 @@ public class ComputerCraft {
 
     private static abstract class BasePeripheral implements IDynamicPeripheral {
         private final World world;
-        private final BlockPos pos;
+        private final TileRailBase tileRailBase;
         private final String[] fnNames;
         private final APICall[] fnImpls;
 
-        public BasePeripheral(World world, BlockPos blockPos, LinkedHashMap<String, APICall> methods) {
+        public BasePeripheral(World world, TileRailBase tileRailBase, LinkedHashMap<String, APICall> methods) {
             this.world = world;
-            this.pos = blockPos;
+            this.tileRailBase = tileRailBase;
             this.fnNames = methods.keySet().toArray(new String[0]);
             this.fnImpls = methods.values().toArray(new APICall[0]);
         }
@@ -71,7 +71,7 @@ public class ComputerCraft {
         @Override
         public MethodResult callMethod(@Nonnull IComputerAccess iComputerAccess, @Nonnull ILuaContext iLuaContext, int i, @Nonnull IArguments objects) {
             try {
-                CommonAPI api = CommonAPI.create(world, pos);
+                CommonAPI api = CommonAPI.create(tileRailBase);
                 if (api != null && i < fnImpls.length) {
                     return MethodResult.of(fnImpls[i].apply(api, objects.getAll()));
                 }
@@ -115,8 +115,8 @@ public class ComputerCraft {
             });
         }
 
-        public DetectorPeripheral(World world, BlockPos blockPos) {
-            super(world, blockPos, methods);
+        public DetectorPeripheral(World world, TileRailBase tileRailBase) {
+            super(world, tileRailBase, methods);
         }
 
         @Nonnull
@@ -148,8 +148,8 @@ public class ComputerCraft {
             });
         }
 
-        public LocoControlPeripheral(World world, BlockPos blockPos) {
-            super(world, blockPos, methods);
+        public LocoControlPeripheral(World world, TileRailBase tileRailBase) {
+            super(world, tileRailBase, methods);
         }
 
         @Nonnull

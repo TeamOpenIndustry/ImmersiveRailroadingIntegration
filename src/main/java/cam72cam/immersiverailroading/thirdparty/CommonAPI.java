@@ -24,6 +24,20 @@ public class CommonAPI {
         return create(world, pos, EntityRollingStock.class);
     }
 
+    public static CommonAPI create(TileRailBase te) {
+        return create(te, EntityRollingStock.class);
+    }
+
+    public static CommonAPI create(TileRailBase te, Class<? extends EntityRollingStock> stockClass) {
+        if (te != null && !te.internal.isRemoved()) {
+            EntityRollingStock stock = te.getStockNearBy(stockClass);
+            if (stock != null) {
+                return new CommonAPI(stock);
+            }
+        }
+        return null;
+    }
+
     public static CommonAPI create(World world, BlockPos pos, Class<? extends EntityRollingStock> stockClass) {
         TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
         if (te != null) {
