@@ -13,7 +13,6 @@ buildscript {
 
 repositories {
     maven { url = "http://maven.cil.li/" }
-	maven { url = "https://cc.crzd.me/maven/" }
 }
 
 sourceSets {
@@ -29,6 +28,6 @@ dependencies {
 	compile files(CurseForge.asset(223815, 2551739)) // IGWMod
 	compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
-	compile "dan200.computercraft:ComputerCraft:1.80pr1-build3"
+	compile files(CurseForge.asset(282001, 2992872)) // ComputerCraft
 	compile "trackapi:TrackAPI:1.12.2-forge-1.2"
 }
