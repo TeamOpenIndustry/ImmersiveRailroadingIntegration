@@ -161,19 +161,19 @@ public class CommonAPI {
     public String getTag() {
     	TagEvent.GetTagEvent tagEvent = new TagEvent.GetTagEvent(stock.getUUID());
     	MinecraftForge.EVENT_BUS.post(tagEvent);
-    	
+
     	if (tagEvent.tag != null)
     	{
     		return tagEvent.tag;
     	}
-    	
+
         return stock.tag;
     }
 
     public void setTag(String tag) {
     	TagEvent.SetTagEvent tagEvent = new TagEvent.SetTagEvent(stock.getUUID(), tag);
     	MinecraftForge.EVENT_BUS.post(tagEvent);
-    	
+
         stock.tag = tag;
     }
 
@@ -190,11 +190,26 @@ public class CommonAPI {
         return (float)val;
     }
 
+    public Float getThrottle() {
+        if (stock instanceof Locomotive) {
+            return ((Locomotive) stock).getThrottle();
+        }
+        return null;
+    }
+
     public void setThrottle(double throttle) {
         if (stock instanceof Locomotive) {
             ((Locomotive)stock).setThrottle(normalize(throttle));
         }
     }
+
+    public Float getAirBrake() {
+        if (stock instanceof Locomotive) {
+            return ((Locomotive) stock).getAirBrake();
+        }
+        return null;
+    }
+
     public void setAirBrake(double brake) {
         if (stock instanceof Locomotive) {
             ((Locomotive)stock).setAirBrake(normalize(brake));
