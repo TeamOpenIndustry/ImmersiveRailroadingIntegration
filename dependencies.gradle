@@ -13,7 +13,6 @@ buildscript {
 
 repositories {
     maven { url = "http://maven.cil.li/" }
-	maven { url = "https://cc.crzd.me/maven/" }
 	maven {
 		name = "chickenbones"
 		url = "http://chickenbones.net/maven/"
