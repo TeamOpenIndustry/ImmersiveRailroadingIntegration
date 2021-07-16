@@ -13,7 +13,6 @@ buildscript {
 
 repositories {
     maven { url = "http://maven.cil.li/" }
-	maven { url = "https://cc.crzd.me/maven/" }
 }
 
 sourceSets {
@@ -28,7 +27,7 @@ dependencies {
 	compile files(CurseForge.asset(231951, 2443553)) // Immersive Engineering
 	compile "li.cil.oc:OpenComputers:MC1.11.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.11.2-1.7.+"
-	compile "dan200.computercraft:ComputerCraft-SquidDev-CC-ComputerCraft-feature-minecraft-1.11.2:1.80pr1-build4"
+	compile files(CurseForge.asset(282001, 2992872)) // ComputerCraft
 	compile "trackapi:TrackAPI:1.11.2-forge-1.2"
 }
 
