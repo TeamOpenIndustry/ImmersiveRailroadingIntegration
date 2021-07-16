@@ -7,7 +7,7 @@ import cam72cam.mod.resource.Identifier;
 
 public class Legacy {
     private static void legacy(BlockTypeEntity type) {
-        TileEntity.registerLegacyTE(new Identifier("minecraft", type.id.getPath()), type.internal.getDefaultState());
+        TileEntity.registerLegacyTE(new Identifier("minecraft", type.id.getPath()), type.internal.defaultBlockState());
     }
 
     public static void registerBlocks() {

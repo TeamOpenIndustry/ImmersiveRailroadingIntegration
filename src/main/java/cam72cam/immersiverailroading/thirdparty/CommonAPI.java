@@ -60,7 +60,7 @@ public class CommonAPI {
             info.put("tag", stock.tag);
             info.put("weight", stock.getWeight());
 
-            Direction dir = Direction.fromAngle(stock.getRotationYaw());
+            Direction dir = Direction.fromYRot(stock.getRotationYaw());
             if (stock instanceof EntityMoveableRollingStock) {
                 EntityMoveableRollingStock movable = (EntityMoveableRollingStock) stock;
                 info.put("speed", movable.getCurrentSpeed().metric());
@@ -132,7 +132,7 @@ public class CommonAPI {
         info.put("tractive_effort_N", acc.tractiveEffortNewtons);
         info.put("weight_kg", acc.massToMoveKg);
         info.put("speed_km", stock.getCurrentSpeed().metric());
-        Direction dir = Direction.fromAngle(stock.getRotationYaw());
+        Direction dir = Direction.fromYRot(stock.getRotationYaw());
         if (stock.getCurrentSpeed().metric() < 0) {
             dir = dir.getOpposite();
         }
