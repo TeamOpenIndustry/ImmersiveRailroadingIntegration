@@ -52,10 +52,12 @@ public class ComputerCraft {
         private final BlockPos pos;
         private final String[] fnNames;
         private final APICall[] fnImpls;
+        private final CommonAPI api;
 
         public BasePeripheral(World world, BlockPos blockPos, LinkedHashMap<String, APICall> methods) {
             this.world = world;
             this.pos = blockPos;
+            this.api = CommonAPI.create(world, pos);
             this.fnNames = methods.keySet().toArray(new String[0]);
             this.fnImpls = methods.values().toArray(new APICall[0]);
         }
@@ -71,7 +73,6 @@ public class ComputerCraft {
         @Override
         public MethodResult callMethod(@Nonnull IComputerAccess iComputerAccess, @Nonnull ILuaContext iLuaContext, int i, @Nonnull IArguments objects) {
             try {
-                CommonAPI api = CommonAPI.create(world, pos);
                 if (api != null && i < fnImpls.length) {
                     return MethodResult.of(fnImpls[i].apply(api, objects.getAll()));
                 }

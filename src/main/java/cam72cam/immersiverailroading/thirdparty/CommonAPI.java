@@ -12,13 +12,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class CommonAPI {
-    private final EntityRollingStock stock;
+    private final Supplier<EntityRollingStock> stockSupplier;
 
     public static CommonAPI create(World world, BlockPos pos) {
         return create(world, pos, EntityRollingStock.class);
@@ -27,16 +27,21 @@ public class CommonAPI {
     public static CommonAPI create(World world, BlockPos pos, Class<? extends EntityRollingStock> stockClass) {
         TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
         if (te != null) {
-            EntityRollingStock stock = te.getStockNearBy(stockClass);
-            if (stock != null) {
-                return new CommonAPI(stock);
-            }
+            return new CommonAPI(te, stockClass);
         }
         return null;
     }
 
+    public CommonAPI(TileRailBase te, Class<? extends EntityRollingStock> stockClass) {
+        stockSupplier = () -> te.getStockNearBy(stockClass);
+    }
+
     public CommonAPI(EntityRollingStock stock) {
-        this.stock = stock;
+        stockSupplier = () -> stock;
+    }
+
+    public EntityRollingStock stock() {
+        return stockSupplier.get();
     }
 
     public FluidStack getFluid() {
@@ -51,6 +56,7 @@ public class CommonAPI {
     }
 
     public Map<String, Object> info() {
+        EntityRollingStock stock = this.stock();
         if (stock != null) {
             Map<String, Object> info = new HashMap<>();
             EntityRollingStockDefinition def = stock.getDefinition();
@@ -117,10 +123,10 @@ public class CommonAPI {
     }
 
     public Map<String, Object> consist(boolean supportsList) {
-        if (!(stock instanceof EntityCoupleableRollingStock)) {
+        if (!(stock() instanceof EntityCoupleableRollingStock)) {
             return null;
         }
-        EntityCoupleableRollingStock stock = (EntityCoupleableRollingStock) this.stock;
+        EntityCoupleableRollingStock stock = (EntityCoupleableRollingStock) stock();
 
         int traction = 0;
         PhysicsAccummulator acc = new PhysicsAccummulator(stock.getCurrentTickPosAndPrune());
@@ -159,6 +165,7 @@ public class CommonAPI {
     }
 
     public String getTag() {
+        EntityRollingStock stock = this.stock();
     	TagEvent.GetTagEvent tagEvent = new TagEvent.GetTagEvent(stock.getUUID());
     	MinecraftForge.EVENT_BUS.post(tagEvent);
     	
@@ -171,6 +178,7 @@ public class CommonAPI {
     }
 
     public void setTag(String tag) {
+        EntityRollingStock stock = this.stock();
     	TagEvent.SetTagEvent tagEvent = new TagEvent.SetTagEvent(stock.getUUID(), tag);
     	MinecraftForge.EVENT_BUS.post(tagEvent);
     	
@@ -191,33 +199,39 @@ public class CommonAPI {
     }
 
     public void setThrottle(double throttle) {
+        EntityRollingStock stock = this.stock();
         if (stock instanceof Locomotive) {
             ((Locomotive)stock).setThrottle(normalize(throttle));
         }
     }
     public void setAirBrake(double brake) {
+        EntityRollingStock stock = this.stock();
         if (stock instanceof Locomotive) {
             ((Locomotive)stock).setAirBrake(normalize(brake));
         }
     }
 
     public void setHorn(int horn) {
+        EntityRollingStock stock = this.stock();
         if (stock instanceof Locomotive) {
             ((Locomotive)stock).setHorn(horn, null);
         }
     }
 
     public void setBell(int bell) {
+        EntityRollingStock stock = this.stock();
         if (stock instanceof Locomotive) {
             ((Locomotive)stock).setBell(bell);
         }
     }
 
     public Vector3d getPosition() {
+        EntityRollingStock stock = this.stock();
         return stock.getPosition().internal();
     }
 
     public UUID getUniqueID() {
+        EntityRollingStock stock = this.stock();
         return stock.getUUID();
     }
 }
