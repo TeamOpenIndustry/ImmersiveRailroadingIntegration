@@ -78,7 +78,7 @@ public class ComputerCraft {
             } catch (Exception ex) {
                 ImmersiveRailroading.catching(ex);
             }
-            return null;
+            return MethodResult.of();
         }
 
         @Override
