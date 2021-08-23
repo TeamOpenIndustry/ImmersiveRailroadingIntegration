@@ -13,6 +13,10 @@ buildscript {
 
 repositories {
     maven { url = "http://maven.cil.li/" }
+    maven {
+		name = "SquidDev"
+		url = "https://squiddev.cc/maven/"
+	}
 }
 
 sourceSets {
@@ -28,6 +32,7 @@ dependencies {
 	compile files(CurseForge.asset(223815, 2551739)) // IGWMod
 	compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
-	compile files(CurseForge.asset(282001, 2507302)) // ComputerCraft
+	//compile files(CurseForge.asset(282001, 2507302)) // ComputerCraft
+    compile "org.squiddev:cc-tweaked-1.12.2:1.89.2"
 	compile "trackapi:TrackAPI:1.12.2-forge-1.2"
 }
