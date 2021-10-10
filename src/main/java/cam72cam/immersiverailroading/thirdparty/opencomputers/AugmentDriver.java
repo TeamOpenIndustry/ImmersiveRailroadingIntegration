@@ -205,12 +205,32 @@ public class AugmentDriver implements DriverBlock {
 			}
 			return null;
 		}
-
-		@Callback(doc = "function(double) -- sets the locomotive brake")
-		public Object[] setBrake(Context context, Arguments arguments) throws Exception {
+		@Callback(doc = "function(double) -- sets the locomotive reverser")
+		public Object[] setReverser(Context context, Arguments arguments) throws Exception {
 			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
 			if (api != null) {
-				api.setAirBrake(arguments.checkDouble(0));
+				api.setReverser(arguments.checkDouble(0));
+			}
+			return null;
+		}
+
+		@Callback(doc = "function(double) -- sets the train brake")
+		public Object[] setBrake(Context context, Arguments arguments) throws Exception {
+			return setTrainBrake(context, arguments);
+		}
+		@Callback(doc = "function(double) -- sets the train brake")
+		public Object[] setTrainBrake(Context context, Arguments arguments) throws Exception {
+			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
+			if (api != null) {
+				api.setTrainBrake(arguments.checkDouble(0));
+			}
+			return null;
+		}
+		@Callback(doc = "function(double) -- sets the independent brake")
+		public Object[] setIndependentBrake(Context context, Arguments arguments) throws Exception {
+			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
+			if (api != null) {
+				api.setIndependentBrake(arguments.checkDouble(0));
 			}
 			return null;
 		}

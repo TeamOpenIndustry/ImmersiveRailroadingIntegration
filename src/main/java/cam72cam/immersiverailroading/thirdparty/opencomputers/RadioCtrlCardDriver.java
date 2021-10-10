@@ -97,6 +97,13 @@ public class RadioCtrlCardDriver implements DriverItem {
 			}
 			return null;
 		}
+		@Callback(doc = "function(double) -- sets the locomotive reverser")
+		public Object[] setReverser(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				api.setReverser(arguments.checkDouble(0));
+			}
+			return null;
+		}
 
 		private boolean radioDrain()
 		{
@@ -113,10 +120,21 @@ public class RadioCtrlCardDriver implements DriverItem {
 			return false;
 		}
 
-		@Callback(doc = "function(double) -- sets the locomotive brake")
+		@Callback(doc = "function(double) -- sets the train brake")
 		public Object[] setBrake(Context context, Arguments arguments) {
+			return setTrainBrake(context, arguments);
+		}
+		@Callback(doc = "function(double) -- sets the train brake")
+		public Object[] setTrainBrake(Context context, Arguments arguments) {
 			if (radioDrain()) {
-				api.setAirBrake(arguments.checkDouble(0));
+				api.setTrainBrake(arguments.checkDouble(0));
+			}
+			return null;
+		}
+		@Callback(doc = "function(double) -- sets the independent brake")
+		public Object[] setIndependentBrake(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				api.setIndependentBrake(arguments.checkDouble(0));
 			}
 			return null;
 		}
