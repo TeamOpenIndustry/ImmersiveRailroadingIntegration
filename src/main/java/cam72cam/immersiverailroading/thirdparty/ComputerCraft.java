@@ -1,8 +1,10 @@
 package cam72cam.immersiverailroading.thirdparty;
 
 import cam72cam.immersiverailroading.ImmersiveRailroading;
+import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.tile.TileRailBase;
+import cam72cam.immersiverailroading.library.TickableAugment;
 import cam72cam.mod.math.Vec3i;
 import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.lua.ILuaContext;
@@ -16,7 +18,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.UUID;
 
 public class ComputerCraft {
     public static void init() {
@@ -27,10 +32,10 @@ public class ComputerCraft {
                 TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
-                        return new DetectorPeripheral(world, blockPos);
+                        return new DetectorPeripheral(world, blockPos, rail);
                     }
                     if (rail.getAugment() == Augment.LOCO_CONTROL) {
-                        return new LocoControlPeripheral(world, blockPos);
+                        return new LocoControlPeripheral(world, blockPos, rail);
                     }
                 }
                 return null;
@@ -43,23 +48,61 @@ public class ComputerCraft {
         Object[] apply(CommonAPI api, Object[] params) throws LuaException;
     }
 
-    private static abstract class BasePeripheral implements IPeripheral {
+    private static abstract class BasePeripheral extends TickableAugment implements IPeripheral {
         private final World world;
         private final BlockPos pos;
+        private final TileRailBase rail;
         private final String[] fnNames;
         private final APICall[] fnImpls;
+        private final List<IComputerAccess> computers;
+        private UUID wasOverhead;
+        protected Class<? extends EntityRollingStock> typeFilter = EntityRollingStock.class;
 
-        public BasePeripheral(World world, BlockPos blockPos, LinkedHashMap<String, APICall> methods) {
+        public BasePeripheral(World world, BlockPos blockPos, TileRailBase rail, LinkedHashMap<String, APICall> methods) {
+            System.out.println("HERE: init");
             this.world = world;
             this.pos = blockPos;
+            this.rail = rail;
             this.fnNames = methods.keySet().toArray(new String[0]);
             this.fnImpls = methods.values().toArray(new APICall[0]);
+            this.computers = new ArrayList<>();
+        }
+
+        public void update() {
+            if (computers.size() > 0) {
+                TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
+                EntityRollingStock nearby = te.getStockNearBy(typeFilter);
+                UUID isOverhead = nearby != null ? nearby.getUUID() : null;
+                if (isOverhead != wasOverhead) {
+                    for (IComputerAccess computer : computers) {
+                        computer.queueEvent("ir_train_overhead", new String[]{te.getAugment().toString(), isOverhead == null ? null : isOverhead.toString()});
+                    }
+                }
+
+                wasOverhead = isOverhead;
+            }
         }
 
         @Nonnull
         @Override
         public String[] getMethodNames() {
             return fnNames;
+        }
+
+        @Override
+        public void attach(@Nonnull IComputerAccess computer) {
+            this.computers.add(computer);
+            if (this.computers.size() == 1) {
+                this.rail.registerTickableAugments(this);
+            }
+        }
+
+        @Override
+        public void detach(@Nonnull IComputerAccess computer) {
+            this.computers.remove(computer);
+            if (this.computers.size() == 0) {
+                this.rail.unregisterTickableAugments(this);
+            }
         }
 
         @Nullable
@@ -110,8 +153,8 @@ public class ComputerCraft {
             });
         }
 
-        public DetectorPeripheral(World world, BlockPos blockPos) {
-            super(world, blockPos, methods);
+        public DetectorPeripheral(World world, BlockPos blockPos, TileRailBase rail) {
+            super(world, blockPos, rail, methods);
         }
 
         @Nonnull
@@ -143,8 +186,8 @@ public class ComputerCraft {
             });
         }
 
-        public LocoControlPeripheral(World world, BlockPos blockPos) {
-            super(world, blockPos, methods);
+        public LocoControlPeripheral(World world, BlockPos blockPos, TileRailBase rail) {
+            super(world, blockPos, rail, methods);
         }
 
         @Nonnull
