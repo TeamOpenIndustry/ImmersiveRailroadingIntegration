@@ -39,13 +39,10 @@ public class CommonAPI {
     }
 
     public FluidStack getFluid() {
-        /*
-        Capability<ITank> energyCapability = CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY;
-        ITank fh = stock.getCapability(energyCapability, null);
-        if (fh != null) {
-            return fh.drain(Integer.MAX_VALUE, false);
+        if (stock instanceof FreightTank) {
+            FreightTank tank = (FreightTank) stock;
+            return tank.getLiquid() != null ? new FluidStack(tank.getLiquid().internal, tank.getLiquidAmount()) : null;
         }
-        */
         return null;
     }
 
