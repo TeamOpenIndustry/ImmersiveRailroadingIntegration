@@ -4,7 +4,10 @@ import cam72cam.immersiverailroading.Config;
 import cam72cam.immersiverailroading.IRItems;
 import cam72cam.immersiverailroading.entity.Locomotive;
 import cam72cam.immersiverailroading.items.ItemRadioCtrlCard;
+import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.thirdparty.CommonAPI;
+import cam72cam.immersiverailroading.tile.TileRailBase;
+import cam72cam.mod.math.Vec3i;
 import li.cil.oc.api.Network;
 import li.cil.oc.api.driver.DriverItem;
 import li.cil.oc.api.driver.item.Slot;
@@ -88,6 +91,42 @@ public class RadioCtrlCardDriver implements DriverItem {
 		@Override
 		public void update() {
 			// Node node = this.node();
+		}
+
+		@Callback(doc = "function():table -- returns an info dump about the current car")
+		public Object[] info(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				return new Object[] {
+						api.info()
+				};
+			}
+			return null;
+		}
+
+		@Callback(doc = "function():table -- returns an info dump about the current consist")
+		public Object[] consist(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				return new Object[] {
+						api.consist(true)
+				};
+			}
+			return null;
+		}
+
+		@Callback(doc = "function():table -- gets the stock's tag")
+		public Object[] getTag(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				return new Object[] { api.getTag() };
+			}
+			return null;
+		}
+
+		@Callback(doc = "function():table -- sets the stock's tag")
+		public Object[] setTag(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				api.setTag(arguments.checkString(0));
+			}
+			return null;
 		}
 
 		@Callback(doc = "function(double) -- sets the locomotive throttle")
