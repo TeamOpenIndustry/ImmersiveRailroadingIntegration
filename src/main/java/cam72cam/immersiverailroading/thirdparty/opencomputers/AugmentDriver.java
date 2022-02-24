@@ -251,5 +251,19 @@ public class AugmentDriver implements DriverBlock {
 			}
 			return null;
 		}
+
+
+		@Callback(doc = "function():boolean or nil -- gets the ignition state of bound diesel locomotive")
+		public Object[] getIgnition(Context context, Arguments arguments) {
+			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
+			return new Object[]{api.getIgnition()};
+		}
+
+		@Callback(doc = "function(boolean: on) -- sets the ignition of the bound diesel locomotive")
+		public Object[] setIgnition(Context context, Arguments arguments) {
+			CommonAPI api = CommonAPI.create(world, pos, Locomotive.class);
+			api.setIgnition(arguments.checkBoolean(0));
+			return null;
+		}
 	}
 }

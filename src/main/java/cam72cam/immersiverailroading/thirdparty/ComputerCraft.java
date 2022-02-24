@@ -98,6 +98,15 @@ public class ComputerCraft {
         }
     }
 
+    private static boolean getBooleanParam(Object[] params, int id, String name) throws LuaException {
+        Object obj = getObjParam(params, id, name);
+        try {
+            return Boolean.parseBoolean(obj.toString());
+        } catch (NumberFormatException ex) {
+            throw new LuaException("Required parameter \"" + name +"\" is not a number");
+        }
+    }
+
     private static class DetectorPeripheral extends BasePeripheral {
         private static LinkedHashMap<String, APICall> methods = new LinkedHashMap<>();
         static {
@@ -151,6 +160,11 @@ public class ComputerCraft {
             });
             methods.put("setBell", (CommonAPI api, Object[] params) -> {
                 api.setBell((int) getDoubleParam(params, 0, "bell"));
+                return null;
+            });
+            methods.put("getIgnition", (CommonAPI api, Object[] params) -> new Object[] { api.getIgnition() });
+            methods.put("setIgnition", (CommonAPI api, Object[] params) -> {
+                api.setIgnition(getBooleanParam(params, 0, "ignition"));
                 return null;
             });
         }
