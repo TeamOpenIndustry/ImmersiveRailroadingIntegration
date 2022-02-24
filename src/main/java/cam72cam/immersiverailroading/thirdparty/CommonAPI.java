@@ -90,6 +90,7 @@ public class CommonAPI {
                     info.put("temperature", steam.getBoilerTemperature());
                 }
                 if (loco instanceof LocomotiveDiesel) {
+                    info.put("ignition", ((LocomotiveDiesel) loco).isTurnedOn());
                     info.put("temperature", ((LocomotiveDiesel) loco).getEngineTemperature());
                 }
             }
@@ -230,4 +231,18 @@ public class CommonAPI {
     public UUID getUniqueID() {
         return stock.getUUID();
     }
+
+    public Boolean getIgnition() {
+        if (stock instanceof LocomotiveDiesel) {
+            return ((LocomotiveDiesel)stock).isTurnedOn();
+        }
+        return null;
+    }
+
+    public void setIgnition(boolean on) {
+        if (stock instanceof LocomotiveDiesel) {
+            ((LocomotiveDiesel)stock).setTurnedOn(on);
+        }
+    }
+
 }
