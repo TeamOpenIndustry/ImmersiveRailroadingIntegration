@@ -12,7 +12,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.*;
@@ -81,8 +80,9 @@ public class CommonAPI {
                 info.put("horsepower", locoDef.getHorsePower(loco.gauge));
                 info.put("traction", locoDef.getStartingTractionNewtons(loco.gauge));
                 info.put("max_speed", locoDef.getMaxSpeed(loco.gauge).metric());
-                info.put("brake", loco.getAirBrake());
+                info.put("brake", loco.getTrainBrake());
                 info.put("throttle", loco.getThrottle());
+                info.put("reverser", loco.getReverser());
 
                 if (loco instanceof LocomotiveSteam) {
                     LocomotiveSteam steam = (LocomotiveSteam) loco;
@@ -195,9 +195,19 @@ public class CommonAPI {
             ((Locomotive)stock).setThrottle(normalize(throttle));
         }
     }
-    public void setAirBrake(double brake) {
+    public void setReverser(double reverser) {
         if (stock instanceof Locomotive) {
-            ((Locomotive)stock).setAirBrake(normalize(brake));
+            ((Locomotive)stock).setReverser(normalize(reverser));
+        }
+    }
+    public void setTrainBrake(double brake) {
+        if (stock instanceof Locomotive) {
+            ((Locomotive)stock).setTrainBrake(normalize(brake));
+        }
+    }
+    public void setIndependentBrake(double brake) {
+        if (stock instanceof EntityMoveableRollingStock) {
+            ((Locomotive)stock).setIndependentBrake(normalize(brake));
         }
     }
 
