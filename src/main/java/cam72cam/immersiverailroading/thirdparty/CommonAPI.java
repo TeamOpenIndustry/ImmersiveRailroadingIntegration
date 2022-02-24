@@ -74,6 +74,10 @@ public class CommonAPI {
                 info.put("passengers", stock.getPassengerCount());
             }
 
+            if (stock instanceof EntityMoveableRollingStock) {
+                info.put("independent_brake", ((EntityMoveableRollingStock) stock).getIndependentBrake());
+            }
+
             if (stock instanceof Locomotive) {
                 Locomotive loco = (Locomotive) stock;
                 LocomotiveDefinition locoDef = loco.getDefinition();
@@ -81,6 +85,7 @@ public class CommonAPI {
                 info.put("traction", locoDef.getStartingTractionNewtons(loco.gauge));
                 info.put("max_speed", locoDef.getMaxSpeed(loco.gauge).metric());
                 info.put("brake", loco.getTrainBrake());
+                info.put("train_brake", loco.getTrainBrake());
                 info.put("throttle", loco.getThrottle());
                 info.put("reverser", loco.getReverser());
 
