@@ -16,9 +16,6 @@ import dan200.computercraft.api.peripheral.IPeripheralProvider;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,6 +39,8 @@ public class ComputerCraft {
                 return null;
             }
         });
+
+        CommonEvents.World.TICK.subscribe(TickHandler::onWorldTick);
     }
 
     @FunctionalInterface
@@ -49,14 +48,12 @@ public class ComputerCraft {
         Object[] apply(CommonAPI api, Object[] params) throws LuaException;
     }
 
-    @Mod.EventBusSubscriber
     public static class TickHandler {
         private static final Map<BasePeripheral, Set<IComputerAccess>> tickable = new HashMap<>();
 
-        @SubscribeEvent
-        public static void onWorldTick(TickEvent.WorldTickEvent event) {
+        public static void onWorldTick(World world) {
             tickable.forEach((peripheral, computers) -> {
-                if (!event.world.isRemote && peripheral.world == event.world) {
+                if (!world.isRemote && peripheral.world == world) {
                     peripheral.update(computers);
                 }
             });
