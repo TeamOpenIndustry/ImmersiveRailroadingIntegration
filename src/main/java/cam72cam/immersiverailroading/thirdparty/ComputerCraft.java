@@ -1,8 +1,11 @@
 package cam72cam.immersiverailroading.thirdparty;
 
 import cam72cam.immersiverailroading.ImmersiveRailroading;
+import cam72cam.immersiverailroading.entity.EntityRollingStock;
+import cam72cam.immersiverailroading.entity.Locomotive;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.tile.TileRailBase;
+import cam72cam.mod.event.CommonEvents;
 import cam72cam.mod.math.Vec3i;
 import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.lua.ILuaContext;
@@ -13,10 +16,13 @@ import dan200.computercraft.api.peripheral.IPeripheralProvider;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.LinkedHashMap;
+import java.util.*;
 
 public class ComputerCraft {
     public static void init() {
@@ -43,17 +49,75 @@ public class ComputerCraft {
         Object[] apply(CommonAPI api, Object[] params) throws LuaException;
     }
 
+    @Mod.EventBusSubscriber
+    public static class TickHandler {
+        private static final Map<BasePeripheral, Set<IComputerAccess>> tickable = new HashMap<>();
+
+        @SubscribeEvent
+        public static void onWorldTick(TickEvent.WorldTickEvent event) {
+            tickable.forEach((peripheral, computers) -> {
+                if (!event.world.isRemote && peripheral.world == event.world) {
+                    peripheral.update(computers);
+                }
+            });
+        }
+
+        public static void attach(BasePeripheral p, IComputerAccess c) {
+            if (!tickable.containsKey(p)) {
+                tickable.put(p, new HashSet<>());
+            }
+            tickable.get(p).add(c);
+        }
+
+        public static void detach(BasePeripheral p, IComputerAccess c) {
+            if (tickable.containsKey(p)) {
+                tickable.get(p).remove(c);
+                if (tickable.get(p).isEmpty()) {
+                    tickable.remove(p);
+                }
+            }
+        }
+    }
+
     private static abstract class BasePeripheral implements IPeripheral {
         private final World world;
         private final BlockPos pos;
         private final String[] fnNames;
         private final APICall[] fnImpls;
+        private UUID wasOverhead;
+        protected Class<? extends EntityRollingStock> typeFilter = EntityRollingStock.class;
 
         public BasePeripheral(World world, BlockPos blockPos, LinkedHashMap<String, APICall> methods) {
             this.world = world;
             this.pos = blockPos;
             this.fnNames = methods.keySet().toArray(new String[0]);
             this.fnImpls = methods.values().toArray(new APICall[0]);
+            this.wasOverhead = null;
+        }
+
+        public void update(Set<IComputerAccess> computers) {
+            if (computers.size() > 0) {
+                TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
+                EntityRollingStock nearby = te.getStockNearBy(typeFilter);
+                UUID isOverhead = nearby != null ? nearby.getUUID() : null;
+                if (isOverhead != wasOverhead) {
+                    for (IComputerAccess computer : computers) {
+                        computer.queueEvent("ir_train_overhead", new String[]{te.getAugment().toString(), isOverhead == null ? null : isOverhead.toString()});
+                    }
+                }
+
+                wasOverhead = isOverhead;
+            }
+        }
+
+        @Override
+        public void attach(@Nonnull IComputerAccess computer) {
+            TickHandler.attach(this, computer);
+        }
+
+        @Override
+        public void detach(@Nonnull IComputerAccess computer) {
+            TickHandler.detach(this, computer);
         }
 
         @Nonnull
@@ -171,6 +235,7 @@ public class ComputerCraft {
 
         public LocoControlPeripheral(World world, BlockPos blockPos) {
             super(world, blockPos, methods);
+            typeFilter = Locomotive.class;
         }
 
         @Nonnull
