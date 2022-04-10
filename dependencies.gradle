@@ -17,6 +17,7 @@ repositories {
 		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
 	}
+    maven { url = "https://teamopenindustry.cc/maven" }
 }
 
 sourceSets {
