@@ -92,7 +92,7 @@ public class ComputerCraft {
 
         public void update(Set<IComputerAccess> computers) {
             if (computers.size() > 0) {
-                TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
+                TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(pos, TileRailBase.class);
                 EntityRollingStock nearby = te.getStockNearBy(typeFilter);
                 UUID isOverhead = nearby != null ? nearby.getUUID() : null;
                 if (isOverhead != wasOverhead) {
