@@ -16,6 +16,7 @@ repositories {
 		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
 	}
+    maven { url = "https://teamopenindustry.cc/maven" }
 }
 
 sourceSets {
@@ -27,7 +28,7 @@ sourceSets {
 }
 
 dependencies {
-	compile fg.deobf("org.squiddev:cc-tweaked-1.16.5:1.97.0")
-	compileOnly files(CurseForge.asset(231951, 3102280)) // Immersive Engineering
-	compile fg.deobf("trackapi:TrackAPI:1.16.5-forge-1.2")
+	implementation fg.deobf("org.squiddev:cc-tweaked-1.16.5:1.97.0")
+	implementation files(CurseForge.asset(231951, 3102280)) // Immersive Engineering
+	implementation fg.deobf("trackapi:TrackAPI:1.16.5-forge-1.2")
 }
