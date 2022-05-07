@@ -4,7 +4,10 @@ import cam72cam.immersiverailroading.Config;
 import cam72cam.immersiverailroading.IRItems;
 import cam72cam.immersiverailroading.entity.Locomotive;
 import cam72cam.immersiverailroading.items.ItemRadioCtrlCard;
+import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.thirdparty.CommonAPI;
+import cam72cam.immersiverailroading.tile.TileRailBase;
+import cam72cam.mod.math.Vec3i;
 import li.cil.oc.api.Network;
 import li.cil.oc.api.prefab.DriverItem;
 import li.cil.oc.api.driver.item.Slot;
@@ -89,10 +92,53 @@ public class RadioCtrlCardDriver extends DriverItem {
 			// Node node = this.node();
 		}
 
+		@Callback(doc = "function():table -- returns an info dump about the current car")
+		public Object[] info(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				return new Object[] {
+						api.info()
+				};
+			}
+			return null;
+		}
+
+		@Callback(doc = "function():table -- returns an info dump about the current consist")
+		public Object[] consist(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				return new Object[] {
+						api.consist(true)
+				};
+			}
+			return null;
+		}
+
+		@Callback(doc = "function():table -- gets the stock's tag")
+		public Object[] getTag(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				return new Object[] { api.getTag() };
+			}
+			return null;
+		}
+
+		@Callback(doc = "function():table -- sets the stock's tag")
+		public Object[] setTag(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				api.setTag(arguments.checkString(0));
+			}
+			return null;
+		}
+
 		@Callback(doc = "function(double) -- sets the locomotive throttle")
 		public Object[] setThrottle(Context context, Arguments arguments) {
 			if (radioDrain()) {
 				api.setThrottle(arguments.checkDouble(0));
+			}
+			return null;
+		}
+		@Callback(doc = "function(double) -- sets the locomotive reverser")
+		public Object[] setReverser(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				api.setReverser(arguments.checkDouble(0));
 			}
 			return null;
 		}
@@ -112,10 +158,21 @@ public class RadioCtrlCardDriver extends DriverItem {
 			return false;
 		}
 
-		@Callback(doc = "function(double) -- sets the locomotive brake")
+		@Callback(doc = "function(double) -- sets the train brake")
 		public Object[] setBrake(Context context, Arguments arguments) {
+			return setTrainBrake(context, arguments);
+		}
+		@Callback(doc = "function(double) -- sets the train brake")
+		public Object[] setTrainBrake(Context context, Arguments arguments) {
 			if (radioDrain()) {
-				api.setAirBrake(arguments.checkDouble(0));
+				api.setTrainBrake(arguments.checkDouble(0));
+			}
+			return null;
+		}
+		@Callback(doc = "function(double) -- sets the independent brake")
+		public Object[] setIndependentBrake(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				api.setIndependentBrake(arguments.checkDouble(0));
 			}
 			return null;
 		}
@@ -151,5 +208,22 @@ public class RadioCtrlCardDriver extends DriverItem {
 			}
 			return new Object[] { null };
 		}
+
+        @Callback(doc = "function():boolean or nil -- gets the ignition state of bound diesel locomotive")
+        public Object[] getIgnition(Context context, Arguments arguments) {
+            if (radioDrain()) {
+                return new Object[]{api.getIgnition()};
+            }
+            return null;
+        }
+
+		@Callback(doc = "function(boolean: on) -- sets the ignition of the bound diesel locomotive")
+		public Object[] setIgnition(Context context, Arguments arguments) {
+			if (radioDrain()) {
+				api.setIgnition(arguments.checkBoolean(0));
+			}
+			return null;
+		}
+
 	}
 }

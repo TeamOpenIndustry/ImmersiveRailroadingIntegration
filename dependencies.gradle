@@ -13,6 +13,11 @@ buildscript {
 
 repositories {
     maven { url = "http://maven.cil.li/" }
+    maven {
+		name = "SquidDev"
+		url = "https://squiddev.cc/maven/"
+	}
+    maven { url = "https://teamopenindustry.cc/maven" }
 }
 
 sourceSets {
