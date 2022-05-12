@@ -37,6 +37,7 @@ public class CompatLoader {
 				invokeStatic("OpenComputers", "cam72cam.immersiverailroading.thirdparty.opencomputers.Compat", "init");
 				invokeStatic("ComputerCraft", "cam72cam.immersiverailroading.thirdparty.ComputerCraft", "init");
 				invokeStatic("ImmersiveEngineering", "cam72cam.immersiverailroading.thirdparty.ImmersiveEngineering", "init");
+				invokeStatic("Railcraft", "cam72cam.immersiverailroading.thirdparty.Railcraft", "init");
 				break;
 			case FINALIZE:
 				break;

@@ -29,6 +29,7 @@ sourceSets {
 }
 
 dependencies {
+    compile files(CurseForge.asset(51195, 2299713)) // Railcraft
 	compile files(CurseForge.asset(231951, 2299020)) // Immersive Engineering
 	compile "li.cil.oc:OpenComputers:MC1.7.10-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.7.10-1.7.+"
