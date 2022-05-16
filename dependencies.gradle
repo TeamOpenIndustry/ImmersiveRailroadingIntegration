@@ -1,21 +1,11 @@
-import cam72cam.universalmodcore.CurseForge;
-
-buildscript {
-    repositories {
-        jcenter()
-        maven { url = "https://teamopenindustry.cc/maven" }
-    }
-    dependencies {
-        classpath 'cam72cam.universalmodcore:UniversalModCoreGradle:0.1.3'
-    }
-}
-
-
 repositories {
 	maven {
 		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
 	}
+    maven {
+        url "https://cursemaven.com"
+    }
     maven { url = "https://teamopenindustry.cc/maven" }
 }
 
@@ -29,6 +19,6 @@ sourceSets {
 
 dependencies {
 	implementation fg.deobf("org.squiddev:cc-tweaked-1.16.5:1.97.0")
-	implementation files(CurseForge.asset(231951, 3102280)) // Immersive Engineering
+	implementation "curse.maven:ImmersiveEngineering-231951:3102280"
 	implementation fg.deobf("trackapi:TrackAPI:1.16.5-forge-1.2")
 }
