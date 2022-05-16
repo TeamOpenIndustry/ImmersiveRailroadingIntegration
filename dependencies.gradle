@@ -1,22 +1,12 @@
-import cam72cam.universalmodcore.CurseForge;
-
-buildscript {
-    repositories {
-        jcenter()
-        maven { url = "https://teamopenindustry.cc/maven" }
-    }
-    dependencies {
-        classpath 'cam72cam.universalmodcore:UniversalModCoreGradle:0.1.3'
-    }
-}
-
-
 repositories {
     maven { url = "http://maven.cil.li/" }
 	maven {
 		name = "chickenbones"
 		url = "http://chickenbones.net/maven/"
 	}
+    maven {
+        url "https://cursemaven.com"
+    }
     maven { url = "https://teamopenindustry.cc/maven" }
 }
 
@@ -29,13 +19,13 @@ sourceSets {
 }
 
 dependencies {
-    compile files(CurseForge.asset(51195, 2299713)) // Railcraft
-	compile files(CurseForge.asset(231951, 2299020)) // Immersive Engineering
+    compile "curse.maven:Railcraft-51195:2299713"
+	compile "curse.maven:ImmersiveEngineering-231951:2299020"
 	compile "li.cil.oc:OpenComputers:MC1.7.10-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.7.10-1.7.+"
 	compile "codechicken:CodeChickenLib:1.7.10-1.1.3.140:dev"
 	compile "codechicken:CodeChickenCore:1.7.10-1.0.7.47:dev"
-	compile files(CurseForge.asset(67504, 2269339)) // ComputerCraft
+	compile "curse.maven:ComputerCraft-67504:2269339"
 	compile "trackapi:TrackAPI:1.7.10-forge-1.2"
 }
 
