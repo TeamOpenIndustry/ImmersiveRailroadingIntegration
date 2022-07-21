@@ -1,7 +1,6 @@
 package cam72cam.immersiverailroading.thirdparty;
 
 import cam72cam.immersiverailroading.entity.*;
-import cam72cam.immersiverailroading.physics.PhysicsAccummulator;
 import cam72cam.immersiverailroading.registry.EntityRollingStockDefinition;
 import cam72cam.immersiverailroading.registry.LocomotiveDefinition;
 import cam72cam.immersiverailroading.tile.TileRailBase;
@@ -118,6 +117,19 @@ public class CommonAPI {
         return null;
     }
 
+    private static class TrainIterator {
+        private int count;
+        private double tractiveEffortNewtons;
+        private double massToMoveKg;
+
+        public void accept(EntityCoupleableRollingStock stock, boolean direction) {
+            this.count += 1;
+            this.tractiveEffortNewtons += stock instanceof Locomotive ?
+                    ((Locomotive)stock).getTractiveEffortNewtons(stock.getCurrentSpeed()) * (direction ? 1 : -1) : 0;
+            this.massToMoveKg += stock.getWeight();
+        }
+    }
+
     public Map<String, Object> consist(boolean supportsList) {
         if (!(stock instanceof EntityCoupleableRollingStock)) {
             return null;
@@ -125,8 +137,8 @@ public class CommonAPI {
         EntityCoupleableRollingStock stock = (EntityCoupleableRollingStock) this.stock;
 
         int traction = 0;
-        PhysicsAccummulator acc = new PhysicsAccummulator(stock.getCurrentTickPosAndPrune());
-        stock.mapTrain(stock, true, true, acc::accumulate);
+        TrainIterator acc = new TrainIterator();
+        stock.mapTrain(stock, true, true, acc::accept);
         Map<String, Object> info = new HashMap<>();
         List<Object> locos = new ArrayList<>();
 
