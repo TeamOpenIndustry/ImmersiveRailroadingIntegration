@@ -3,9 +3,7 @@ repositories {
 		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
 	}
-    maven {
-        url "https://cursemaven.com"
-    }
+    maven {	url = "https://maven.blamejared.com/" }
     maven { url = "https://teamopenindustry.cc/maven" }
 }
 
@@ -19,6 +17,7 @@ sourceSets {
 
 dependencies {
 	implementation fg.deobf("org.squiddev:cc-tweaked-1.16.5:1.97.0")
-	implementation "curse.maven:ImmersiveEngineering-231951:3102280"
+	compileOnly fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.16.5-5.0.6-141")
+	implementation fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.16.5-5.0.6-141:datagen")
 	implementation fg.deobf("trackapi:TrackAPI:1.16.5-forge-1.2")
 }
