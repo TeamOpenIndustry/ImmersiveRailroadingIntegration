@@ -19,6 +19,6 @@ sourceSets {
 
 dependencies {
 	implementation fg.deobf("org.squiddev:cc-tweaked-1.15.2:1.94.0")
-	implementation "curse.maven:ImmersiveEngineering-231951:3071956"
-	implementation "trackapi:TrackAPI:1.15.2-forge-1.2"
+	implementation fg.deobf("curse.maven:ImmersiveEngineering-231951:3071956")
+	implementation fg.deobf("trackapi:TrackAPI:1.15.2-forge-1.2")
 }
