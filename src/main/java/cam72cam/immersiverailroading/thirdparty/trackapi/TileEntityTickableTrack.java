@@ -3,6 +3,7 @@ package cam72cam.immersiverailroading.thirdparty.trackapi;
 import cam72cam.mod.ModCore;
 import cam72cam.mod.block.tile.TileEntityTickable;
 import cam72cam.mod.resource.Identifier;
+import net.minecraft.world.phys.Vec3;
 
 public class TileEntityTickableTrack extends TileEntityTickable implements trackapi.lib.ITrack {
     static {
@@ -23,7 +24,7 @@ public class TileEntityTickableTrack extends TileEntityTickable implements track
     }
 
     @Override
-    public net.minecraft.util.math.vector.Vector3d getNextPosition(net.minecraft.util.math.vector.Vector3d pos, net.minecraft.util.math.vector.Vector3d mot) {
+    public Vec3 getNextPosition(Vec3 pos, Vec3 mot) {
         return track() != null ? track().getNextPosition(pos, mot) : pos;
     }
 }

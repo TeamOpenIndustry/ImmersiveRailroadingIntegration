@@ -16,9 +16,9 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IDynamicPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheralProvider;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
@@ -30,7 +30,7 @@ public class ComputerCraft {
         ComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
             @Nullable
             @Override
-            public LazyOptional<IPeripheral> getPeripheral(@Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull Direction enumFacing) {
+            public LazyOptional<IPeripheral> getPeripheral(@Nonnull Level world, @Nonnull BlockPos blockPos, @Nonnull Direction enumFacing) {
                 TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
@@ -55,7 +55,7 @@ public class ComputerCraft {
     public static class TickHandler {
         private static final Map<BasePeripheral, Set<IComputerAccess>> tickable = new HashMap<>();
 
-        public static void onWorldTick(World world) {
+        public static void onWorldTick(Level world) {
             tickable.forEach((peripheral, computers) -> {
                 if (!world.isClientSide && peripheral.world == world) {
                     peripheral.update(computers);
@@ -81,7 +81,7 @@ public class ComputerCraft {
     }
 
     private static abstract class BasePeripheral implements IDynamicPeripheral {
-        private final World world;
+        private final Level world;
         private final BlockPos pos;
         private final String[] fnNames;
         private final APICall[] fnImpls;
@@ -89,7 +89,7 @@ public class ComputerCraft {
         private UUID wasOverhead;
         protected Class<? extends EntityRollingStock> typeFilter = EntityRollingStock.class;
 
-        public BasePeripheral(World world, BlockPos blockPos, LinkedHashMap<String, APICall> methods) {
+        public BasePeripheral(Level world, BlockPos blockPos, LinkedHashMap<String, APICall> methods) {
             this.world = world;
             this.pos = blockPos;
             this.api = CommonAPI.create(world, pos);
@@ -186,7 +186,7 @@ public class ComputerCraft {
             });
         }
 
-        public DetectorPeripheral(World world, BlockPos blockPos) {
+        public DetectorPeripheral(Level world, BlockPos blockPos) {
             super(world, blockPos, methods);
         }
 
@@ -236,7 +236,7 @@ public class ComputerCraft {
             });
         }
 
-        public LocoControlPeripheral(World world, BlockPos blockPos) {
+        public LocoControlPeripheral(Level world, BlockPos blockPos) {
             super(world, blockPos, methods);
             typeFilter = Locomotive.class;
         }

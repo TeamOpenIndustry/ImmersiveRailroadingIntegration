@@ -16,8 +16,8 @@ sourceSets {
 }
 
 dependencies {
-	implementation fg.deobf("org.squiddev:cc-tweaked-1.16.5:1.97.0")
-	compileOnly fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.16.5-5.0.6-141")
-	implementation fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.16.5-5.0.6-141:datagen")
-	implementation fg.deobf("trackapi:TrackAPI:1.16.5-forge-1.2")
+	implementation fg.deobf("org.squiddev:cc-tweaked-1.17.1:1.100.4")
+	compileOnly fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.17.1-5.0.2-pre.306")
+	implementation fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.17.1-5.0.2-pre.306:datagen")
+	implementation fg.deobf("trackapi:TrackAPI:1.17.1-forge-1.2")
 }

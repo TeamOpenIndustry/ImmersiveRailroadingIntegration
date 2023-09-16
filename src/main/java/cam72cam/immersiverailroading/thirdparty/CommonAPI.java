@@ -6,10 +6,10 @@ import cam72cam.immersiverailroading.registry.LocomotiveDefinition;
 import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.immersiverailroading.thirdparty.event.TagEvent;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -19,11 +19,11 @@ import java.util.function.Supplier;
 public class CommonAPI {
     private final Supplier<EntityRollingStock> stockSupplier;
 
-    public static CommonAPI create(World world, BlockPos pos) {
+    public static CommonAPI create(Level world, BlockPos pos) {
         return create(world, pos, EntityRollingStock.class);
     }
 
-    public static CommonAPI create(World world, BlockPos pos, Class<? extends EntityRollingStock> stockClass) {
+    public static CommonAPI create(Level world, BlockPos pos, Class<? extends EntityRollingStock> stockClass) {
         TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
         if (te != null) {
             return new CommonAPI(te, stockClass);
@@ -254,7 +254,7 @@ public class CommonAPI {
         }
     }
 
-    public Vector3d getPosition() {
+    public Vec3 getPosition() {
         EntityRollingStock stock = this.stock();
         return stock.getPosition().internal();
     }
