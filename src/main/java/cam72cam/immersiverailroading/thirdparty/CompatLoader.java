@@ -25,7 +25,7 @@ public class CompatLoader {
 	public static void common(ModEvent event) {
 		switch (event) {
 			case CONSTRUCT:
-				Legacy.registerBlocks();
+				// TODO 1.17.1 Legacy.registerBlocks();
 				break;
 			case INITIALIZE:
 				break;
