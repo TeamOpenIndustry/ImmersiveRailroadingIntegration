@@ -106,7 +106,7 @@ public class CommonAPI {
 
             FluidStack fluid = getFluid();
             if (fluid != null) {
-                info.put("fluid_type", fluid.getFluid().getAttributes().getDisplayName(null));
+                info.put("fluid_type", fluid.getFluid().getFluidType().toString());
                 info.put("fluid_amount", fluid.getAmount());
             } else {
                 info.put("fluid_type", null);

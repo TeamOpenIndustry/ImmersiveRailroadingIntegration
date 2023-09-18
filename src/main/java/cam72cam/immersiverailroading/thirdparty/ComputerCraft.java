@@ -8,6 +8,7 @@ import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.event.CommonEvents;
 import cam72cam.mod.math.Vec3i;
 import dan200.computercraft.api.ComputerCraftAPI;
+import dan200.computercraft.api.ForgeComputerCraftAPI;
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
@@ -27,7 +28,7 @@ import java.util.*;
 
 public class ComputerCraft {
     public static void init() {
-        ComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
+        ForgeComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
             @Nullable
             @Override
             public LazyOptional<IPeripheral> getPeripheral(@Nonnull Level world, @Nonnull BlockPos blockPos, @Nonnull Direction enumFacing) {
