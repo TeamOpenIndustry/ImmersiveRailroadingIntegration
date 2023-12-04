@@ -13,6 +13,7 @@ import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheralProvider;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -109,12 +110,18 @@ public class ComputerCraft {
 
         @Override
         public void attach(@Nonnull IComputerAccess computer) {
-            TickHandler.attach(this, computer);
+            MinecraftServer server = this.world.getServer();
+            if (server != null) {
+                server.deferTask(() -> TickHandler.attach(this, computer));
+            }
         }
 
         @Override
         public void detach(@Nonnull IComputerAccess computer) {
-            TickHandler.detach(this, computer);
+            MinecraftServer server = this.world.getServer();
+            if (server != null) {
+                server.deferTask(() -> TickHandler.detach(this, computer));
+            }
         }
 
         @Nonnull
