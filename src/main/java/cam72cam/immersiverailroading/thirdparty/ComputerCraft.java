@@ -16,6 +16,7 @@ import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IDynamicPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheral;
 import dan200.computercraft.api.peripheral.IPeripheralProvider;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -56,25 +57,31 @@ public class ComputerCraft {
         private static final Map<BasePeripheral, Set<IComputerAccess>> tickable = new HashMap<>();
 
         public static void onWorldTick(World world) {
-            tickable.forEach((peripheral, computers) -> {
-                if (!world.isClientSide && peripheral.world == world) {
-                    peripheral.update(computers);
-                }
-            });
+            synchronized (tickable) {
+                tickable.forEach((peripheral, computers) -> {
+                    if (!world.isClientSide && peripheral.world == world) {
+                        peripheral.update(computers);
+                    }
+                });
+            }
         }
 
         public static void attach(BasePeripheral p, IComputerAccess c) {
-            if (!tickable.containsKey(p)) {
-                tickable.put(p, new HashSet<>());
+            synchronized (tickable) {
+                if (!tickable.containsKey(p)) {
+                    tickable.put(p, new HashSet<>());
+                }
+                tickable.get(p).add(c);
             }
-            tickable.get(p).add(c);
         }
 
         public static void detach(BasePeripheral p, IComputerAccess c) {
-            if (tickable.containsKey(p)) {
-                tickable.get(p).remove(c);
-                if (tickable.get(p).isEmpty()) {
-                    tickable.remove(p);
+            synchronized (tickable) {
+                if (tickable.containsKey(p)) {
+                    tickable.get(p).remove(c);
+                    if (tickable.get(p).isEmpty()) {
+                        tickable.remove(p);
+                    }
                 }
             }
         }
