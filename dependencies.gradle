@@ -16,17 +16,8 @@ sourceSets {
 }
 
 dependencies {
-	compileOnly fg.deobf("cc.tweaked:cc-tweaked-1.20.1-forge:1.108.1")
-	compileOnly fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.20.1-9.4.0-166.40")
-	implementation fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.20.1-9.4.0-166.40:datagen")
-	implementation fg.deobf("trackapi:TrackAPI:1.20.1-forge-1.2")
-}
-
-minecraft {
-	runs {
-		configureEach {
-			property 'mixin.env.remapRefMap', 'true'
-			property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-		}
-	}
+	compileOnly "cc.tweaked:cc-tweaked-1.20.4-forge:1.110.2"
+	compileOnly "blusunrize.immersiveengineering:ImmersiveEngineering:1.20.4-11.7.0-184"
+	implementation "blusunrize.immersiveengineering:ImmersiveEngineering:1.20.4-11.7.0-184:datagen"
+	implementation "trackapi:TrackAPI:1.20.4-neoforge-1.2-c5a4c3"
 }

@@ -1,5 +1,6 @@
 package cam72cam.immersiverailroading.thirdparty;
 
+import cam72cam.immersiverailroading.IRBlocks;
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.entity.Locomotive;
@@ -7,45 +8,51 @@ import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.tile.TileRailBase;
 import cam72cam.mod.event.CommonEvents;
 import cam72cam.mod.math.Vec3i;
-import dan200.computercraft.api.ComputerCraftAPI;
-import dan200.computercraft.api.ForgeComputerCraftAPI;
 import dan200.computercraft.api.lua.IArguments;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.lua.MethodResult;
-import dan200.computercraft.api.peripheral.IComputerAccess;
-import dan200.computercraft.api.peripheral.IDynamicPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheralProvider;
-import net.minecraft.core.Direction;
+import dan200.computercraft.api.peripheral.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.LazyOptional;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Supplier;
 
+@Mod.EventBusSubscriber(modid = ImmersiveRailroading.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ComputerCraft {
+    private static Supplier<IBlockCapabilityProvider<IPeripheral, Direction>> run =
+            () -> (world, blockPos, state, be, side) -> null;
+
     public static void init() {
-        ForgeComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
-            @Nullable
-            @Override
-            public LazyOptional<IPeripheral> getPeripheral(@Nonnull Level world, @Nonnull BlockPos blockPos, @Nonnull Direction enumFacing) {
-                TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
-                if (rail != null) {
-                    if (rail.getAugment() == Augment.DETECTOR) {
-                        return LazyOptional.of(() -> new DetectorPeripheral(world, blockPos));
-                    }
-                    if (rail.getAugment() == Augment.LOCO_CONTROL) {
-                        return LazyOptional.of(() -> new LocoControlPeripheral(world, blockPos));
-                    }
+        run = () -> (world, blockPos, state, be, side) -> {
+            TileRailBase rail = cam72cam.mod.world.World.get(world)
+                                                        .getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
+            if (rail != null) {
+                if (rail.getAugment() == Augment.DETECTOR) {
+                    return new DetectorPeripheral(world, blockPos);
                 }
-                return LazyOptional.empty();
+                if (rail.getAugment() == Augment.LOCO_CONTROL) {
+                    return new LocoControlPeripheral(world, blockPos);
+                }
             }
-        });
+            return null;
+        };
 
         CommonEvents.World.TICK.subscribe(TickHandler::onWorldTick);
+    }
+
+    @SubscribeEvent
+    public static void onCapabilityRegister(RegisterCapabilitiesEvent event) {
+        event.registerBlock(PeripheralCapability.get(), run.get(),
+                            IRBlocks.BLOCK_RAIL.internal, IRBlocks.BLOCK_RAIL_GAG.internal);
     }
 
     @FunctionalInterface

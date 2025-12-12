@@ -12,5 +12,5 @@ Files.write(path, content.getBytes(charset));
 
 path = Paths.get(System.getProperty("user.dir"), "src/main/resources/META-INF/mods.toml");
 content = new String(Files.readAllBytes(path), charset);
-content += "\n[[dependencies.trackapi]]\nmodId=\"trackapi\"\nmandatory=true\nversionRange=\"[1.2,)\"\nordering=\"AFTER\"\nside=\"BOTH\"";
+content += "\n[[dependencies.trackapi]]\nmodId=\"trackapi\"\ntype='required'\nversionRange=\"[1.2,)\"\nordering=\"AFTER\"\nside=\"BOTH\"";
 Files.write(path, content.getBytes(charset));

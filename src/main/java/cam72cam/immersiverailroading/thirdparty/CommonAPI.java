@@ -10,8 +10,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidStack;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -184,7 +184,7 @@ public class CommonAPI {
     public String getTag() {
         EntityRollingStock stock = this.stock();
     	TagEvent.GetTagEvent tagEvent = new TagEvent.GetTagEvent(stock.getUUID());
-    	MinecraftForge.EVENT_BUS.post(tagEvent);
+    	NeoForge.EVENT_BUS.post(tagEvent);
     	
     	if (tagEvent.tag != null)
     	{
@@ -197,7 +197,7 @@ public class CommonAPI {
     public void setTag(String tag) {
         EntityRollingStock stock = this.stock();
     	TagEvent.SetTagEvent tagEvent = new TagEvent.SetTagEvent(stock.getUUID(), tag);
-    	MinecraftForge.EVENT_BUS.post(tagEvent);
+    	NeoForge.EVENT_BUS.post(tagEvent);
     	
         stock.tag = tag;
     }

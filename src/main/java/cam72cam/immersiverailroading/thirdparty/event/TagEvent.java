@@ -2,7 +2,7 @@ package cam72cam.immersiverailroading.thirdparty.event;
 
 import java.util.UUID;
 
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
 
 public abstract class TagEvent extends Event {
 	public final UUID stockID;
