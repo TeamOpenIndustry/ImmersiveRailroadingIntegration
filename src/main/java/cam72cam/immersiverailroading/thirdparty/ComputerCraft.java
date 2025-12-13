@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = ImmersiveRailroading.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = ImmersiveRailroading.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ComputerCraft {
     private static Supplier<IBlockCapabilityProvider<IPeripheral, Direction>> run =
             () -> (world, blockPos, state, be, side) -> null;
