@@ -1,8 +1,10 @@
 repositories {
-	maven {
-		name = "SquidDev"
-		url = "https://squiddev.cc/maven/"
-	}
+    maven {
+        url "https://maven.squiddev.cc"
+        content {
+            includeGroup("cc.tweaked")
+        }
+    }
     maven {	url = "https://maven.blamejared.com/" }
     maven { url = "https://teamopenindustry.cc/maven" }
 }
@@ -16,8 +18,8 @@ sourceSets {
 }
 
 dependencies {
-	implementation "blusunrize.immersiveengineering:ImmersiveEngineering:1.20.4-11.7.0-184"
-    implementation "cc.tweaked:cc-tweaked-1.20.4-forge:1.110.2"
-	implementation "blusunrize.immersiveengineering:ImmersiveEngineering:1.20.4-11.7.0-184:datagen"
-	implementation "trackapi:TrackAPI:1.20.4-neoforge-1.2-c5a4c3"
+	implementation "blusunrize.immersiveengineering:ImmersiveEngineering:1.21.1-12.4.2-194"
+    implementation "cc.tweaked:cc-tweaked-1.21.1-forge:1.116.2"
+	implementation "blusunrize.immersiveengineering:ImmersiveEngineering:1.21.1-12.4.2-194:datagen"
+	implementation "trackapi:TrackAPI:1.21.1-neoforge-1.2-a965c1"
 }
