@@ -1,6 +1,5 @@
 package cam72cam.immersiverailroading.thirdparty;
 
-import cam72cam.immersiverailroading.IRBlocks;
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.entity.Locomotive;
@@ -16,19 +15,15 @@ import dan200.computercraft.api.peripheral.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = ImmersiveRailroading.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ComputerCraft {
-    private static Supplier<IBlockCapabilityProvider<IPeripheral, Direction>> run =
+    protected static Supplier<IBlockCapabilityProvider<IPeripheral, Direction>> run =
             () -> (world, blockPos, state, be, side) -> null;
 
     public static void init() {
@@ -47,12 +42,6 @@ public class ComputerCraft {
         };
 
         CommonEvents.World.TICK.subscribe(TickHandler::onWorldTick);
-    }
-
-    @SubscribeEvent
-    public static void onCapabilityRegister(RegisterCapabilitiesEvent event) {
-        event.registerBlock(PeripheralCapability.get(), run.get(),
-                            IRBlocks.BLOCK_RAIL.internal, IRBlocks.BLOCK_RAIL_GAG.internal);
     }
 
     @FunctionalInterface
