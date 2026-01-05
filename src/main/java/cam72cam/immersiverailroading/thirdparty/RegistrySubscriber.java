@@ -6,12 +6,15 @@ import dan200.computercraft.api.peripheral.PeripheralCapability;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.fml.ModList;
 
 @Mod.EventBusSubscriber(modid = ImmersiveRailroading.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RegistrySubscriber {
     @SubscribeEvent
     public static void onCapabilityRegister(RegisterCapabilitiesEvent event) {
-        event.registerBlock(PeripheralCapability.get(), ComputerCraft.run.get(),
-                            IRBlocks.BLOCK_RAIL.internal, IRBlocks.BLOCK_RAIL_GAG.internal);
+        if (ModList.get().isLoaded("computercraft")) {
+            event.registerBlock(PeripheralCapability.get(), ComputerCraft.run.get(),
+                                IRBlocks.BLOCK_RAIL.internal, IRBlocks.BLOCK_RAIL_GAG.internal);
+        }
     }
 }
