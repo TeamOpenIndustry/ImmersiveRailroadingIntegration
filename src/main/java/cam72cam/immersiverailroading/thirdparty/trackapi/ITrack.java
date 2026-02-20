@@ -1,5 +1,6 @@
 package cam72cam.immersiverailroading.thirdparty.trackapi;
 
+import cam72cam.immersiverailroading.util.PathingContext;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.world.World;
@@ -21,9 +22,9 @@ public interface ITrack {
             }
 
             @Override
-            public Vec3d getNextPosition(Vec3d pos, Vec3d vel) {
-                net.minecraft.util.math.Vec3d next = track.getNextPosition(pos.internal(), vel.internal());
-                return next != null ? new Vec3d(next) : null;
+            public PathingContext getNextPosition(PathingContext pos, Vec3d vel) {
+                trackapi.lib.PathingContext next = track.getNextPosition(pos.convert(), vel.internal());
+                return next != null ? new PathingContext(next) : null;
             }
         };
     }
@@ -39,7 +40,7 @@ public interface ITrack {
 
     double getTrackGauge();
 
-    Vec3d getNextPosition(Vec3d vec3d, Vec3d vec3d1);
+    PathingContext getNextPosition(PathingContext vec3d, Vec3d vec3d1);
 
     default trackapi.lib.ITrack to() {
         return new trackapi.lib.ITrack() {
@@ -49,10 +50,11 @@ public interface ITrack {
             }
 
             @Override
-            public net.minecraft.util.math.Vec3d getNextPosition(net.minecraft.util.math.Vec3d pos, net.minecraft.util.math.Vec3d vel) {
-                Vec3d next = ITrack.this.getNextPosition(new Vec3d(pos), new Vec3d(vel));
-                return next != null ? next.internal() : null;
+            public trackapi.lib.PathingContext getNextPosition(trackapi.lib.PathingContext pos, net.minecraft.util.math.Vec3d vel) {
+                PathingContext next = ITrack.this.getNextPosition(new PathingContext(pos), new Vec3d(vel));
+                return next != null ? next.convert() : null;
             }
         };
+        //net.minecraft.util.math.Vec3d
     }
 }
