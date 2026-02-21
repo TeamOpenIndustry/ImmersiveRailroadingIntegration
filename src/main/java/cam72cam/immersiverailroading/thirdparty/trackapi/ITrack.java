@@ -55,6 +55,5 @@ public interface ITrack {
                 return next != null ? next.convert() : null;
             }
         };
-        //net.minecraft.util.math.Vec3d
     }
 }
