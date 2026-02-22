@@ -4,7 +4,7 @@ import cam72cam.mod.ModCore;
 import cam72cam.mod.block.tile.TileEntityTickable;
 import cam72cam.mod.resource.Identifier;
 
-public class TileEntityTickableTrack extends TileEntityTickable implements trackapi.lib.ITrack {
+public class TileEntityTickableTrack extends TileEntityTickable implements trackapi.lib.ITrackV2 {
     static {
         registerTileEntity(TileEntityTickableTrack.class, new Identifier(ModCore.MODID, "tile_track"));
     }
@@ -17,17 +17,25 @@ public class TileEntityTickableTrack extends TileEntityTickable implements track
         super(id);
     }
 
-    private trackapi.lib.ITrack track() {
+    private trackapi.lib.ITrackV2 track() {
         return instance() instanceof ITrack ? ((ITrack) instance()).to() : null;
     }
 
+    @Deprecated
     @Override
     public double getTrackGauge() {
         return track() != null ? track().getTrackGauge() : 0;
     }
 
     @Override
-    public trackapi.lib.PathingContext getNextPosition(trackapi.lib.PathingContext pos, net.minecraft.util.math.Vec3d mot) {
-        return track() != null ? track().getNextPosition(pos, mot) : pos;
+    public double[] getTrackGauges() {
+        double[] fallback = new double[1];
+        fallback[0] = 0;
+        return track() != null ? track().getTrackGauges() : fallback;
+    }
+
+    @Override
+    public trackapi.lib.PathingData getNextPosition(trackapi.lib.PathingData pos, trackapi.lib.Vec3 mot, double gauge) {
+        return track() != null ? track().getNextPosition(pos, mot, gauge) : pos;
     }
 }
