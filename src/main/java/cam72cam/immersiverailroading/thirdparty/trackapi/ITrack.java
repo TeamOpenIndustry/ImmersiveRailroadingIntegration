@@ -29,7 +29,7 @@ public interface ITrack {
             @Override
             public PathingData getNextPosition(PathingData pos, Vec3d vel, double gauge) {
                 trackapi.lib.PathingData next = track.getNextPosition(pos, new trackapi.lib.Vec3(vel.internal()), gauge);
-                return next != null ? (PathingData) next : null;
+                return next != null ? PathingData.safeCast(next): null;
             }
         };
     }
@@ -63,7 +63,7 @@ public interface ITrack {
 
             @Override
             public trackapi.lib.PathingData getNextPosition(trackapi.lib.PathingData pos, trackapi.lib.Vec3 vel, double gauge) {
-                PathingData next = ITrack.this.getNextPosition((PathingData) pos, new Vec3d(vel.toVanilla()), gauge);
+                PathingData next = ITrack.this.getNextPosition(PathingData.fastCast(pos), new Vec3d(vel.toVanilla()), gauge);
                 return next != null ? next : null;
             }
         };
