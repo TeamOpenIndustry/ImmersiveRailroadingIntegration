@@ -27,14 +27,13 @@ public interface ITrack {
             }
 
             @Override
-            public PathingData getNextPosition(PathingData pos, Vec3d vel, double gauge) {
-                trackapi.lib.PathingData next = track.getNextPosition(pos, new trackapi.lib.Vec3(vel.internal()), gauge);
-                return next != null ? PathingData.safeCast(next): null;
+            public void getNextPosition(IRPathingData pos, Vec3d vel, double gauge) {
+                track.getNextPosition(pos, vel.internal(), gauge);
             }
         };
     }
 
-    static ITrack get(World world, Vec3d pos, boolean allowMCRail) {//TODO:这里强转了，等待trackApi动作
+    static ITrack get(World world, Vec3d pos, boolean allowMCRail) {
         trackapi.lib.ITrackV2 track = (trackapi.lib.ITrackV2) Util.getTileEntity(world.internal, pos.internal(), allowMCRail);
         if (track instanceof TileEntityTickableTrack) {
             // shortcut Vec3d wrapping
@@ -46,7 +45,7 @@ public interface ITrack {
     double getTrackGauge();
     double[] getTrackGauges();
 
-    PathingData getNextPosition(PathingData vec3d, Vec3d vec3d1, double gauge);
+    void getNextPosition(IRPathingData vec3d, Vec3d vec3d1, double gauge);
 
     default trackapi.lib.ITrackV2 to() {
         return new trackapi.lib.ITrackV2() {
@@ -62,9 +61,8 @@ public interface ITrack {
             }
 
             @Override
-            public trackapi.lib.PathingData getNextPosition(trackapi.lib.PathingData pos, trackapi.lib.Vec3 vel, double gauge) {
-                PathingData next = ITrack.this.getNextPosition(PathingData.fastCast(pos), new Vec3d(vel.toVanilla()), gauge);
-                return next != null ? next : null;
+            public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, net.minecraft.util.math.Vec3d vel, double gauge) {
+                ITrack.this.getNextPosition(IRPathingData.fastCast(pos), new Vec3d(vel), gauge);
             }
         };
     }

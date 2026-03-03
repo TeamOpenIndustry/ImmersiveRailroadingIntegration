@@ -35,7 +35,7 @@ public class TileEntityTickableTrack extends TileEntityTickable implements track
     }
 
     @Override
-    public trackapi.lib.PathingData getNextPosition(trackapi.lib.PathingData pos, trackapi.lib.Vec3 mot, double gauge) {
-        return track() != null ? track().getNextPosition(pos, mot, gauge) : pos;
+    public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, net.minecraft.util.math.Vec3d mot, double gauge) {
+        track().getNextPosition(pos, mot, gauge);
     }
 }
