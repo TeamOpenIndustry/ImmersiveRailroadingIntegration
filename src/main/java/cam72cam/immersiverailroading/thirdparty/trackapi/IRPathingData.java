@@ -44,7 +44,7 @@ public class IRPathingData extends trackapi.lib.PathingData {
         return deltaMovement;
     }
 
-    public static IRPathingData fastCast(trackapi.lib.PathingData inputData) {
+    public static IRPathingData from(trackapi.lib.PathingData inputData) {
         return (IRPathingData) inputData;
     }
 
