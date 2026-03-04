@@ -62,7 +62,7 @@ public interface ITrack {
 
             @Override
             public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, net.minecraft.util.math.Vec3d vel, double gauge) {
-                ITrack.this.getNextPosition(IRPathingData.fastCast(pos), new Vec3d(vel), gauge);
+                ITrack.this.getNextPosition(IRPathingData.from(pos), new Vec3d(vel), gauge);
             }
         };
     }
