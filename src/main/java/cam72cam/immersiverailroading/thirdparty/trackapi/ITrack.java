@@ -3,6 +3,7 @@ package cam72cam.immersiverailroading.thirdparty.trackapi;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.world.World;
+import trackapi.lib.ITrackV2;
 import trackapi.lib.Util;
 
 public interface ITrack {
@@ -15,12 +16,6 @@ public interface ITrack {
             return null;
         }
         return new ITrack() {
-            @Deprecated
-            @Override
-            public double getTrackGauge() {
-                return track.getTrackGauge();
-            }
-
             @Override
             public double[] getTrackGauges() {
                 return track.getTrackGauges();
@@ -34,7 +29,7 @@ public interface ITrack {
     }
 
     static ITrack get(World world, Vec3d pos, boolean allowMCRail) {
-        trackapi.lib.ITrackV2 track = (trackapi.lib.ITrackV2) Util.getTileEntity(world.internal, pos.internal(), allowMCRail);
+        trackapi.lib.ITrackV2 track = Util.findTrackBlocks(world.internal, pos.internal(), allowMCRail, ITrackV2.class);
         if (track instanceof TileEntityTickableTrack) {
             // shortcut Vec3d wrapping
             return ((ITrack)((TileEntityTickableTrack) track).instance());
@@ -42,19 +37,12 @@ public interface ITrack {
         return from(track);
     }
 
-    double getTrackGauge();
     double[] getTrackGauges();
 
     void getNextPosition(IRPathingData vec3d, Vec3d vec3d1, double gauge);
 
     default trackapi.lib.ITrackV2 to() {
         return new trackapi.lib.ITrackV2() {
-            @Deprecated
-            @Override
-            public double getTrackGauge() {
-                return ITrack.this.getTrackGauge();
-            }
-
             @Override
             public double[] getTrackGauges() {
                 return ITrack.this.getTrackGauges();

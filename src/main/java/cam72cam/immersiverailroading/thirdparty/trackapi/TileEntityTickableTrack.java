@@ -21,17 +21,15 @@ public class TileEntityTickableTrack extends TileEntityTickable implements track
         return instance() instanceof ITrack ? ((ITrack) instance()).to() : null;
     }
 
-    @Deprecated
-    @Override
-    public double getTrackGauge() {
-        return track() != null ? track().getTrackGauge() : 0;
-    }
-
     @Override
     public double[] getTrackGauges() {
-        double[] fallback = new double[1];
-        fallback[0] = 0;
-        return track() != null ? track().getTrackGauges() : fallback;
+        if(track() != null) {
+            return track().getTrackGauges();
+        } else {
+            double[] fallback = new double[1];
+            fallback[0] = 0;
+            return fallback;
+        }
     }
 
     @Override
