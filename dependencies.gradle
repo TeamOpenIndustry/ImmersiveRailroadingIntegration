@@ -21,7 +21,7 @@ sourceSets {
 dependencies {
     compile "curse.maven:Railcraft-51195:2687757"
 	compile "curse.maven:ImmersiveEngineering-231951:2974106"
-//	compile "curse.maven:IGWMod-223815:2551739"
+	compile "curse.maven:IGWMod-223815:2551739"
 	compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
 	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
 	//compile "curse.maven:ComputerCraft-282001:2507302"
