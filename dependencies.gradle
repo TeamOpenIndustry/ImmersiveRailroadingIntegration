@@ -26,5 +26,5 @@ dependencies {
 	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
 	//compile "curse.maven:ComputerCraft-282001:2507302"
     compile "org.squiddev:cc-tweaked-1.12.2:1.89.2"
-	compile "trackapi:TrackAPI:1.12.2-forge-1.2"
+	compile "trackapi:TrackAPI:1.12.2-forge-1.3"
 }
