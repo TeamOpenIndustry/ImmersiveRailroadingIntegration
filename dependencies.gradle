@@ -1,5 +1,5 @@
 repositories {
-    maven { url = "http://maven.cil.li/" }
+    maven { url = "https://maven.cil.li/" }
     maven {
 		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
