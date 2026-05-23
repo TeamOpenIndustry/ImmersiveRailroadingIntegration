@@ -1,5 +1,5 @@
 repositories {
-    maven { url = "http://maven.cil.li/" }
+    maven { url = "https://maven.cil.li/" }
     maven {
 		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
@@ -8,6 +8,10 @@ repositories {
         url "https://cursemaven.com"
     }
     maven { url = "https://teamopenindustry.cc/maven" }
+	maven {
+		name "outlandsReleases"
+		url "https://maven.outlands.top/releases"
+	}
 }
 
 sourceSets {
@@ -19,12 +23,18 @@ sourceSets {
 }
 
 dependencies {
-    compile "curse.maven:Railcraft-51195:2687757"
-	compile "curse.maven:ImmersiveEngineering-231951:2974106"
-	compile "curse.maven:IGWMod-223815:2551739"
-	compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
-	runtime "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
-	//compile "curse.maven:ComputerCraft-282001:2507302"
-    compile "org.squiddev:cc-tweaked-1.12.2:1.89.2"
-	compile "trackapi:TrackAPI:1.12.2-forge-1.2"
+	//Essential libs for OpenComputers
+	implementation 'com.typesafe:config:1.4.3'
+	implementation 'org.scala-lang:scala-library:2.11.11'
+	modImplementation "curse.maven:scalar-legacy-1235372:6842491"
+
+	//Temporarily disable for not supporting Java25
+//    modImplementation "curse.maven:Railcraft-51195:2687757"
+	modImplementation "curse.maven:ImmersiveEngineering-231951:2974106"
+	modImplementation "curse.maven:IGWMod-223815:2551739"
+	//modImplementation "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
+	modImplementation "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
+	//modImplementation "curse.maven:ComputerCraft-282001:2507302"
+    modImplementation "org.squiddev:cc-tweaked-1.12.2:1.89.2"
+	modImplementation "trackapi:TrackAPI:1.12.2-forge-1.2"
 }
