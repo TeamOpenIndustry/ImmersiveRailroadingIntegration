@@ -25,10 +25,11 @@ sourceSets {
 dependencies {
 	//Essential libs for OpenComputers
 	implementation 'com.typesafe:config:1.4.3'
+	implementation 'org.scala-lang:scala-library:2.11.11'
 	modImplementation "curse.maven:scalar-legacy-1235372:6842491"
 
-	//Temporarily disable for not supporting Java25
-//    modImplementation "curse.maven:Railcraft-51195:2687757"
+    modImplementation "curse.maven:railcraft-51195:3853491"
+	modImplementation "curse.maven:railway-depot-worker-1031521:7815628"
 	modImplementation "curse.maven:ImmersiveEngineering-231951:2974106"
 	modImplementation "curse.maven:IGWMod-223815:2551739"
 	//modImplementation "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api"
