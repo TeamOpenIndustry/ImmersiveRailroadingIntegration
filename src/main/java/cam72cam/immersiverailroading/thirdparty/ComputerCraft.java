@@ -25,7 +25,7 @@ public class ComputerCraft {
         ComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
             
             @Override
-            public IPeripheral getPeripheral( World world,  BlockPos blockPos,  EnumFacing enumFacing) {
+            public IPeripheral getPeripheral(World world,  BlockPos blockPos, EnumFacing enumFacing) {
                 TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
@@ -196,12 +196,12 @@ public class ComputerCraft {
         }
 
         @Override
-        public void attach(@Nonnull IComputerAccess iComputerAccess) {
+        public void attach(IComputerAccess iComputerAccess) {
 
         }
 
         @Override
-        public void detach(@Nonnull IComputerAccess iComputerAccess) {
+        public void detach(IComputerAccess iComputerAccess) {
 
         }
     }
@@ -257,12 +257,12 @@ public class ComputerCraft {
         }
 
         @Override
-        public void attach(@Nonnull IComputerAccess iComputerAccess) {
+        public void attach(IComputerAccess iComputerAccess) {
 
         }
 
         @Override
-        public void detach(@Nonnull IComputerAccess iComputerAccess) {
+        public void detach(IComputerAccess iComputerAccess) {
 
         }
     }
