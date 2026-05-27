@@ -194,12 +194,12 @@ public class ComputerCraft {
         }
 
         @Override
-        public void attach(@Nonnull IComputerAccess iComputerAccess) {
+        public void attach(IComputerAccess iComputerAccess) {
 
         }
 
         @Override
-        public void detach(@Nonnull IComputerAccess iComputerAccess) {
+        public void detach(IComputerAccess iComputerAccess) {
 
         }
     }
@@ -255,12 +255,12 @@ public class ComputerCraft {
         }
 
         @Override
-        public void attach(@Nonnull IComputerAccess iComputerAccess) {
+        public void attach(IComputerAccess iComputerAccess) {
 
         }
 
         @Override
-        public void detach(@Nonnull IComputerAccess iComputerAccess) {
+        public void detach(IComputerAccess iComputerAccess) {
 
         }
     }
