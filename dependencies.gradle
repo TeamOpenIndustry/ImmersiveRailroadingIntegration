@@ -2,7 +2,7 @@ repositories {
 	maven { url = "https://maven.cil.li/" }
 	maven {
 		name = "chickenbones"
-		url = "http://chickenbones.net/maven/"
+		url = "https://chickenbones.net/maven/"
 	}
     maven {
         url "https://cursemaven.com"
