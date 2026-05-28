@@ -22,16 +22,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class ComputerCraft {
     public static void init() {
         ComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
-            @Nullable
             @Override
-            public LazyOptional<IPeripheral> getPeripheral(@Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull Direction enumFacing) {
+            public LazyOptional<IPeripheral> getPeripheral(World world, BlockPos blockPos, Direction enumFacing) {
                 TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
@@ -121,25 +118,24 @@ public class ComputerCraft {
         }
 
         @Override
-        public void attach(@Nonnull IComputerAccess computer) {
+        public void attach(IComputerAccess computer) {
             TickHandler.attach(this, computer);
         }
 
         @Override
-        public void detach(@Nonnull IComputerAccess computer) {
+        public void detach(IComputerAccess computer) {
             TickHandler.detach(this, computer);
         }
 
 
-        @Nonnull
         @Override
         public String[] getMethodNames() {
             return fnNames;
         }
 
-        @Nullable
+        
         @Override
-        public MethodResult callMethod(@Nonnull IComputerAccess iComputerAccess, @Nonnull ILuaContext iLuaContext, int i, @Nonnull IArguments objects) {
+        public MethodResult callMethod(IComputerAccess iComputerAccess, ILuaContext iLuaContext, int i, IArguments objects) {
             try {
                 if (api != null && i < fnImpls.length) {
                     return MethodResult.of(fnImpls[i].apply(api, objects.getAll()));
@@ -151,7 +147,7 @@ public class ComputerCraft {
         }
 
         @Override
-        public boolean equals(@Nullable IPeripheral iPeripheral) {
+        public boolean equals( IPeripheral iPeripheral) {
             return iPeripheral == this;
         }
     }
@@ -197,7 +193,7 @@ public class ComputerCraft {
             super(world, blockPos, methods);
         }
 
-        @Nonnull
+        
         @Override
         public String getType() {
             return "ir_augment_detector";
@@ -248,7 +244,7 @@ public class ComputerCraft {
             typeFilter = Locomotive.class;
         }
 
-        @Nonnull
+        
         @Override
         public String getType() {
             return "ir_augment_control";
