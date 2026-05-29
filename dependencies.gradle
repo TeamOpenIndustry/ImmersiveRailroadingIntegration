@@ -3,7 +3,8 @@ repositories {
 		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
 	}
-    maven {	url = "https://maven.blamejared.com/" }
+	maven {	url = "https://maven.blamejared.com/" }
+	maven { url = "https://cursemaven.com" }
     maven { url = "https://teamopenindustry.cc/maven" }
 }
 
@@ -16,17 +17,7 @@ sourceSets {
 }
 
 dependencies {
-	compileOnly fg.deobf("cc.tweaked:cc-tweaked-1.19.4-forge:1.108.0")
-	compileOnly fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.19.4-9.4.0-pre.114")
-	implementation fg.deobf("blusunrize.immersiveengineering:ImmersiveEngineering:1.19.4-9.4.0-pre.114:datagen")
-	implementation fg.deobf("trackapi:TrackAPI:1.19.4-forge-1.2")
-}
-
-minecraft {
-	runs {
-		configureEach {
-			property 'mixin.env.remapRefMap', 'true'
-			property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
-		}
-	}
+	modImplementation "cc.tweaked:cc-tweaked-1.19.4-forge:1.108.0"
+	modImplementation "curse.maven:immersive-engineering-231951:4780685"
+	modImplementation "trackapi:TrackAPI:1.19.4-forge-1.2"
 }
