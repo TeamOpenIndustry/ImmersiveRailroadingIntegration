@@ -36,7 +36,7 @@ public class ComputerCraft {
             return LazyOptional.empty();
         });
 
-        CommonEvents.World.TICK.subscribe(TickHandler::onLevelTick);
+        CommonEvents.World.TICK.subscribe(TickHandler::onWorldTick);
     }
 
     @FunctionalInterface
@@ -47,7 +47,7 @@ public class ComputerCraft {
     public static class TickHandler {
         private static final Map<BasePeripheral, Set<IComputerAccess>> tickable = new HashMap<>();
 
-        public static void onLevelTick(Level world) {
+        public static void onWorldTick(Level world) {
             synchronized (tickable) {
                 tickable.forEach((peripheral, computers) -> {
                     if (!world.isClientSide && peripheral.world == world) {
