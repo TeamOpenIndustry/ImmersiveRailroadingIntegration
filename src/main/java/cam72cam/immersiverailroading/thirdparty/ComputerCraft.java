@@ -17,8 +17,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -53,25 +51,31 @@ public class ComputerCraft {
         private static final Map<BasePeripheral, Set<IComputerAccess>> tickable = new HashMap<>();
 
         public static void onWorldTick(Level world) {
-            tickable.forEach((peripheral, computers) -> {
-                if (!world.isClientSide && peripheral.world == world) {
-                    peripheral.update(computers);
-                }
-            });
+            synchronized (tickable) {
+                tickable.forEach((peripheral, computers) -> {
+                    if (!world.isClientSide && peripheral.world == world) {
+                        peripheral.update(computers);
+                    }
+                });
+            }
         }
 
         public static void attach(BasePeripheral p, IComputerAccess c) {
-            if (!tickable.containsKey(p)) {
-                tickable.put(p, new HashSet<>());
+            synchronized (tickable) {
+                if (!tickable.containsKey(p)) {
+                    tickable.put(p, new HashSet<>());
+                }
+                tickable.get(p).add(c);
             }
-            tickable.get(p).add(c);
         }
 
         public static void detach(BasePeripheral p, IComputerAccess c) {
-            if (tickable.containsKey(p)) {
-                tickable.get(p).remove(c);
-                if (tickable.get(p).isEmpty()) {
-                    tickable.remove(p);
+            synchronized (tickable) {
+                if (tickable.containsKey(p)) {
+                    tickable.get(p).remove(c);
+                    if (tickable.get(p).isEmpty()) {
+                        tickable.remove(p);
+                    }
                 }
             }
         }
@@ -96,7 +100,7 @@ public class ComputerCraft {
         }
 
         public void update(Set<IComputerAccess> computers) {
-            if (computers.size() > 0) {
+            if (!computers.isEmpty()) {
                 TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
                 EntityRollingStock nearby = te.getStockNearBy(typeFilter);
                 UUID isOverhead = nearby != null ? nearby.getUUID() : null;
@@ -111,25 +115,23 @@ public class ComputerCraft {
         }
 
         @Override
-        public void attach(@Nonnull IComputerAccess computer) {
+        public void attach(IComputerAccess computer) {
             TickHandler.attach(this, computer);
         }
 
         @Override
-        public void detach(@Nonnull IComputerAccess computer) {
+        public void detach(IComputerAccess computer) {
             TickHandler.detach(this, computer);
         }
 
 
-        @Nonnull
         @Override
         public String[] getMethodNames() {
             return fnNames;
         }
 
-        @Nullable
         @Override
-        public MethodResult callMethod(@Nonnull IComputerAccess iComputerAccess, @Nonnull ILuaContext iLuaContext, int i, @Nonnull IArguments objects) {
+        public MethodResult callMethod(IComputerAccess iComputerAccess, ILuaContext iLuaContext, int i, IArguments objects) {
             try {
                 if (api != null && i < fnImpls.length) {
                     return MethodResult.of(fnImpls[i].apply(api, objects.getAll()));
@@ -141,7 +143,7 @@ public class ComputerCraft {
         }
 
         @Override
-        public boolean equals(@Nullable IPeripheral iPeripheral) {
+        public boolean equals(IPeripheral iPeripheral) {
             return iPeripheral == this;
         }
     }
@@ -187,7 +189,6 @@ public class ComputerCraft {
             super(world, blockPos, methods);
         }
 
-        @Nonnull
         @Override
         public String getType() {
             return "ir_augment_detector";
@@ -238,7 +239,6 @@ public class ComputerCraft {
             typeFilter = Locomotive.class;
         }
 
-        @Nonnull
         @Override
         public String getType() {
             return "ir_augment_control";
