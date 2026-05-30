@@ -16,8 +16,16 @@ sourceSets {
 	}
 }
 
+unimined.minecraft.mods {
+	modImplementation {
+		//CC:T uses named mapping with access widener
+		catchAWNamespaceAssertion()
+	}
+}
+
+
 dependencies {
-	modImplementation "cc.tweaked:cc-tweaked-1.19.4-forge:1.108.0"
+	modImplementation "curse.maven:cc-tweaked-282001:4726252"
 	modImplementation "curse.maven:immersive-engineering-231951:4780685"
 	modImplementation "trackapi:TrackAPI:1.19.4-forge-1.2"
 }
