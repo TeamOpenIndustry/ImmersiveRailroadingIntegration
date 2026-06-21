@@ -22,5 +22,5 @@ sourceSets {
 }
 
 dependencies {
-	modImplementation "trackapi:TrackAPI:1.21.1-forge-1.2"
+	modImplementation "trackapi:TrackAPI:1.21.1-forge-1.3"
 }
