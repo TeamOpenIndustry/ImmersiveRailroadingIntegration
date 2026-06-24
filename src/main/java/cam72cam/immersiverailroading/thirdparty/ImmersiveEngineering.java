@@ -5,8 +5,8 @@ import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDecor
 import blusunrize.immersiveengineering.common.blocks.metal.BlockTypes_MetalDecoration1;
 import blusunrize.immersiveengineering.common.blocks.stone.BlockTypes_StoneDecoration;
 import cam72cam.immersiverailroading.util.IRFuzzy;
-import cam72cam.mod.item.Fuzzy;
-import cam72cam.mod.item.ItemStack;
+import cam72cam.umc.api.item.Fuzzy;
+import cam72cam.umc.api.item.ItemStack;
 
 public class ImmersiveEngineering {
 

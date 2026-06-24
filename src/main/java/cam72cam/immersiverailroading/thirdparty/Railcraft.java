@@ -1,7 +1,7 @@
 package cam72cam.immersiverailroading.thirdparty;
 
 import cam72cam.immersiverailroading.util.IRFuzzy;
-import cam72cam.mod.item.ItemStack;
+import cam72cam.umc.api.item.ItemStack;
 import mods.railcraft.common.blocks.RailcraftBlocks;
 import mods.railcraft.common.blocks.aesthetics.generic.EnumGeneric;
 import mods.railcraft.common.items.RailcraftItems;

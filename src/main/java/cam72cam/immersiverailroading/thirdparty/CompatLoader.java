@@ -1,8 +1,8 @@
 package cam72cam.immersiverailroading.thirdparty;
 
 import cam72cam.immersiverailroading.ImmersiveRailroading;
-import cam72cam.mod.ModEvent;
-import cam72cam.mod.event.CommonEvents;
+import cam72cam.umc.api.ModEvent;
+import cam72cam.umc.api.event.CommonEvents;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 

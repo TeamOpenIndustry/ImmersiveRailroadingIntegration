@@ -1,8 +1,8 @@
 package cam72cam.immersiverailroading.thirdparty.trackapi;
 
-import cam72cam.mod.math.Vec3d;
-import cam72cam.mod.math.Vec3i;
-import cam72cam.mod.world.World;
+import cam72cam.umc.api.math.Vec3d;
+import cam72cam.umc.api.math.Vec3i;
+import cam72cam.umc.api.world.World;
 import trackapi.lib.Util;
 
 public interface ITrack {
