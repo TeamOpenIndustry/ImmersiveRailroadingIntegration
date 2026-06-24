@@ -7,7 +7,7 @@ import cam72cam.immersiverailroading.items.ItemRadioCtrlCard;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.thirdparty.CommonAPI;
 import cam72cam.immersiverailroading.tile.TileRailBase;
-import cam72cam.mod.math.Vec3i;
+import cam72cam.umc.api.math.Vec3i;
 import li.cil.oc.api.Network;
 import li.cil.oc.api.driver.DriverItem;
 import li.cil.oc.api.driver.item.Slot;
@@ -41,12 +41,12 @@ public class RadioCtrlCardDriver implements DriverItem {
 			return null;
 		}
 
-		ItemRadioCtrlCard.Data data = new ItemRadioCtrlCard.Data(new cam72cam.mod.item.ItemStack(stack));
+		ItemRadioCtrlCard.Data data = new ItemRadioCtrlCard.Data(new cam72cam.umc.api.item.ItemStack(stack));
 		if (data.linked == null) {
 			return null;
 		}
 
-		cam72cam.mod.world.World world = cam72cam.mod.world.World.get(hostWorld);
+		cam72cam.umc.api.world.World world = cam72cam.umc.api.world.World.get(hostWorld);
 		Locomotive found = world.getEntity(data.linked, Locomotive.class);
 		if (found == null) {
 			return null;

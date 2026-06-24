@@ -3,10 +3,10 @@ package cam72cam.immersiverailroading.thirdparty;
 import cam72cam.immersiverailroading.IRBlocks;
 import cam72cam.immersiverailroading.ImmersiveRailroading;
 import cam72cam.immersiverailroading.thirdparty.trackapi.TileEntityTickableTrack;
-import cam72cam.mod.ModCore;
-import cam72cam.mod.block.tile.TileEntity;
-import cam72cam.mod.block.tile.TileEntityTickable;
-import cam72cam.mod.resource.Identifier;
+import cam72cam.umc.api.ModCore;
+import cam72cam.umc.api.block.tile.TileEntity;
+import cam72cam.umc.api.block.tile.TileEntityTickable;
+import cam72cam.umc.api.resource.Identifier;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class Legacy {

@@ -1,8 +1,8 @@
 package cam72cam.immersiverailroading.thirdparty.trackapi;
 
-import cam72cam.mod.ModCore;
-import cam72cam.mod.block.tile.TileEntityTickable;
-import cam72cam.mod.resource.Identifier;
+import cam72cam.umc.api.ModCore;
+import cam72cam.umc.api.block.tile.TileEntityTickable;
+import cam72cam.umc.api.resource.Identifier;
 
 public class TileEntityTickableTrack extends TileEntityTickable implements trackapi.lib.ITrack {
     static {

@@ -5,8 +5,8 @@ import cam72cam.immersiverailroading.entity.EntityRollingStock;
 import cam72cam.immersiverailroading.entity.Locomotive;
 import cam72cam.immersiverailroading.library.Augment;
 import cam72cam.immersiverailroading.tile.TileRailBase;
-import cam72cam.mod.event.CommonEvents;
-import cam72cam.mod.math.Vec3i;
+import cam72cam.umc.api.event.CommonEvents;
+import cam72cam.umc.api.math.Vec3i;
 import dan200.computercraft.api.ComputerCraftAPI;
 import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
@@ -26,7 +26,7 @@ public class ComputerCraft {
             
             @Override
             public IPeripheral getPeripheral( World world,  BlockPos blockPos,  EnumFacing enumFacing) {
-                TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
+                TileRailBase rail = cam72cam.umc.api.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
                         return new DetectorPeripheral(world, blockPos);
@@ -93,7 +93,7 @@ public class ComputerCraft {
 
         public void update(Set<IComputerAccess> computers) {
             if (computers.size() > 0) {
-                TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
+                TileRailBase te = cam72cam.umc.api.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
                 EntityRollingStock nearby = te.getStockNearBy(typeFilter);
                 UUID isOverhead = nearby != null ? nearby.getUUID() : null;
                 if (isOverhead != wasOverhead) {
