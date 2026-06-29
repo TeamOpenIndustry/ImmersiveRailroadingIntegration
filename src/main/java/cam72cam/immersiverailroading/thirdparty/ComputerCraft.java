@@ -18,16 +18,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class ComputerCraft {
     public static void init() {
         ComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
-            @Nullable
+            
             @Override
-            public IPeripheral getPeripheral(@Nonnull World world, @Nonnull BlockPos blockPos, @Nonnull EnumFacing enumFacing) {
+            public IPeripheral getPeripheral( World world,  BlockPos blockPos,  EnumFacing enumFacing) {
                 TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
                 if (rail != null) {
                     if (rail.getAugment() == Augment.DETECTOR) {
@@ -109,7 +107,7 @@ public class ComputerCraft {
         }
 
         @Override
-        public void attach(@Nonnull IComputerAccess computer) {
+        public void attach( IComputerAccess computer) {
             MinecraftServer server = this.world.getMinecraftServer();
             if (server != null) {
                 server.addScheduledTask(() -> TickHandler.attach(this, computer));
@@ -117,22 +115,22 @@ public class ComputerCraft {
         }
 
         @Override
-        public void detach(@Nonnull IComputerAccess computer) {
+        public void detach( IComputerAccess computer) {
             MinecraftServer server = this.world.getMinecraftServer();
             if (server != null) {
                 server.addScheduledTask(() -> TickHandler.detach(this, computer));
             }
         }
 
-        @Nonnull
+        
         @Override
         public String[] getMethodNames() {
             return fnNames;
         }
 
-        @Nullable
+        
         @Override
-        public Object[] callMethod(@Nonnull IComputerAccess iComputerAccess, @Nonnull ILuaContext iLuaContext, int i, @Nonnull Object[] objects) throws LuaException, InterruptedException {
+        public Object[] callMethod( IComputerAccess iComputerAccess,  ILuaContext iLuaContext, int i,  Object[] objects) throws LuaException, InterruptedException {
             try {
                 CommonAPI api = CommonAPI.create(world, pos);
                 if (api != null && i < fnImpls.length) {
@@ -145,7 +143,7 @@ public class ComputerCraft {
         }
 
         @Override
-        public boolean equals(@Nullable IPeripheral iPeripheral) {
+        public boolean equals( IPeripheral iPeripheral) {
             return iPeripheral == this;
         }
     }
@@ -191,7 +189,7 @@ public class ComputerCraft {
             super(world, blockPos, methods);
         }
 
-        @Nonnull
+        
         @Override
         public String getType() {
             return "ir_augment_detector";
@@ -242,7 +240,7 @@ public class ComputerCraft {
             typeFilter = Locomotive.class;
         }
 
-        @Nonnull
+        
         @Override
         public String getType() {
             return "ir_augment_control";
