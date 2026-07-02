@@ -28,6 +28,5 @@ dependencies {
 	//modImplementation "li.cil.oc:OpenComputers:MC1.10.2-1.7.+:api"
 	modImplementation "li.cil.oc:OpenComputers:MC1.10.2-1.7.+"
 	modImplementation "curse.maven:ComputerCraft-282001:2992872"
-	modImplementation "trackapi:TrackAPI:1.10.2-forge-1.2"
+	modImplementation "trackapi:TrackAPI:1.10.2-forge-1.3"
 }
-
