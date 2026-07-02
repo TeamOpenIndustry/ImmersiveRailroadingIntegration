@@ -36,5 +36,5 @@ dependencies {
 	modImplementation "li.cil.oc:OpenComputers:MC1.12.2-1.7.+"
 	//modImplementation "curse.maven:ComputerCraft-282001:2507302"
     modImplementation "org.squiddev:cc-tweaked-1.12.2:1.89.2"
-	modImplementation "trackapi:TrackAPI:1.12.2-forge-1.2"
+	modImplementation "trackapi:TrackAPI:1.12.2-forge-1.3"
 }
