@@ -1,16 +1,7 @@
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
-import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 
-java.nio.file.Path path = Paths.get(System.getProperty("user.dir"), "src/main/java/cam72cam/immersiverailroading/Mod.java");
-Charset charset = StandardCharsets.UTF_8;
-
-String content = new String(Files.readAllBytes(path), charset);
-content = content.replaceAll("\\)\", ", "); required-after:trackapi@[1.1,)\", ");
-Files.write(path, content.getBytes(charset));
-
-path = Paths.get(System.getProperty("user.dir"), "src/main/resources/META-INF/mods.toml");
-content = new String(Files.readAllBytes(path), charset);
-content += "\n[[dependencies.trackapi]]\nmodId=\"trackapi\"\nmandatory=true\nversionRange=\"[1.2,)\"\nordering=\"AFTER\"\nside=\"BOTH\"";
-Files.write(path, content.getBytes(charset));
+Path path = Paths.get(System.getProperty("user.dir"), "src/main/java/cam72cam/immersiverailroading/Mod.java")
+Charset charset = StandardCharsets.UTF_8
