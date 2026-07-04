@@ -40,7 +40,7 @@ public interface ITrack {
 
     double[] getTrackGauges();
 
-    void getNextPosition(IRPathingData vec3d, Vec3d vec3d1, double gauge);
+    void getNextPosition(IRPathingData data, Vec3d motion, double gauge);
 
     default trackapi.lib.ITrackV2 to() {
         return new trackapi.lib.ITrackV2() {
