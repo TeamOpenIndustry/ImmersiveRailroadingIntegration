@@ -3,6 +3,7 @@ package cam72cam.immersiverailroading.thirdparty.trackapi;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.world.World;
+import trackapi.lib.ITrackV2;
 import net.minecraft.world.phys.Vec3;
 import trackapi.lib.Util;
 
@@ -11,26 +12,25 @@ public interface ITrack {
         return get(world, new Vec3d(pos), true) != null;
     }
 
-    static ITrack from(trackapi.lib.ITrack track) {
+    static ITrack from(trackapi.lib.ITrackV2 track) {
         if (track == null) {
             return null;
         }
         return new ITrack() {
             @Override
-            public double getTrackGauge() {
-                return track.getTrackGauge();
+            public double[] getTrackGauges() {
+                return track.getTrackGauges();
             }
 
             @Override
-            public Vec3d getNextPosition(Vec3d pos, Vec3d vel) {
-                Vec3 next = track.getNextPosition(pos.internal(), vel.internal());
-                return next != null ? new Vec3d(next) : null;
+            public void getNextPosition(IRPathingData pos, Vec3d vel, double gauge) {
+                track.getNextPosition(pos, vel.internal(), gauge);
             }
         };
     }
 
     static ITrack get(World world, Vec3d pos, boolean allowMCRail) {
-        trackapi.lib.ITrack track = Util.getTileEntity(world.internal, pos.internal(), allowMCRail);
+        trackapi.lib.ITrackV2 track = Util.findTrackBlocks(world.internal, pos.internal(), allowMCRail, ITrackV2.class);
         if (track instanceof TileEntityTickableTrack) {
             // shortcut Vec3d wrapping
             return ((ITrack)((TileEntityTickableTrack) track).instance());
@@ -38,21 +38,20 @@ public interface ITrack {
         return from(track);
     }
 
-    double getTrackGauge();
+    double[] getTrackGauges();
 
-    Vec3d getNextPosition(Vec3d vec3d, Vec3d vec3d1);
+    void getNextPosition(IRPathingData data, Vec3d motion, double gauge);
 
-    default trackapi.lib.ITrack to() {
-        return new trackapi.lib.ITrack() {
+    default trackapi.lib.ITrackV2 to() {
+        return new trackapi.lib.ITrackV2() {
             @Override
-            public double getTrackGauge() {
-                return ITrack.this.getTrackGauge();
+            public double[] getTrackGauges() {
+                return ITrack.this.getTrackGauges();
             }
 
             @Override
-            public Vec3 getNextPosition(Vec3 pos, Vec3 vel) {
-                Vec3d next = ITrack.this.getNextPosition(new Vec3d(pos), new Vec3d(vel));
-                return next != null ? next.internal() : null;
+            public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, Vec3 vel, double gauge) {
+                ITrack.this.getNextPosition(IRPathingData.wrap(pos), new Vec3d(vel), gauge);
             }
         };
     }
