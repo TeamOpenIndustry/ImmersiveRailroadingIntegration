@@ -50,7 +50,7 @@ public interface ITrack {
             }
 
             @Override
-            public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, net.minecraft.util.math.vector.Vector3d vel, double gauge) {
+            public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, Vec3 vel, double gauge) {
                 ITrack.this.getNextPosition(IRPathingData.wrap(pos), new Vec3d(vel), gauge);
             }
         };

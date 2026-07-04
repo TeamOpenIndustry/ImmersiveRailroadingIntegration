@@ -80,7 +80,7 @@ public class IRPathingData extends trackapi.lib.PathingData {
      */
     @Deprecated
     @Override
-    public trackapi.lib.PathingData setPos(net.minecraft.util.math.vector.Vector3d pos) {
+    public trackapi.lib.PathingData setPos(net.minecraft.world.phys.Vec3 pos) {
         super.setPos(pos);
         if (this.posCache == null || !this.posCache.internal().equals(pos)) {
             Vec3d newPos = new Vec3d(pos);
