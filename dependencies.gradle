@@ -5,9 +5,13 @@ repositories {
 			includeGroup("cc.tweaked")
 		}
 	}
-	maven {	url = "https://maven.blamejared.com/" }
-	maven { url = "https://cursemaven.com" }
-    maven { url = "https://teamopenindustry.cc/maven" }
+	maven {
+		url = "https://maven.blamejared.com/"
+	}
+	maven {
+		url = "https://cursemaven.com"
+	}
+	maven { url = "https://teamopenindustry.cc/maven" }
 }
 
 sourceSets {
@@ -21,5 +25,5 @@ sourceSets {
 dependencies {
 	modImplementation "cc.tweaked:cc-tweaked-1.21.1-forge:1.116.2"
 	modImplementation "curse.maven:immersive-engineering-231951:6733669"
-	modImplementation "trackapi:TrackAPI:1.21.1-neoforge-1.2-a965c1"
+	modImplementation "trackapi:TrackAPI:1.21.1-neoforge-1.3"
 }
