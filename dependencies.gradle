@@ -20,5 +20,5 @@ sourceSets {
 dependencies {
 	modImplementation "org.squiddev:cc-tweaked-1.14.4:1.85.0"
 	modImplementation "curse.maven:ImmersiveEngineering-231951:3045695"
-	modImplementation "trackapi:TrackAPI:1.14.4-forge-1.2"
+	modImplementation "trackapi:TrackAPI:1.14.4-forge-1.3"
 }
