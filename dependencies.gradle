@@ -5,9 +5,13 @@ repositories {
 			includeGroup("cc.tweaked")
 		}
 	}
-	maven {	url = "https://maven.blamejared.com/" }
-	maven { url = "https://cursemaven.com" }
-    maven { url = "https://teamopenindustry.cc/maven" }
+	maven {
+		url = "https://maven.blamejared.com/"
+	}
+	maven {
+		url = "https://cursemaven.com"
+	}
+	maven { url = "https://teamopenindustry.cc/maven" }
 }
 
 sourceSets {
