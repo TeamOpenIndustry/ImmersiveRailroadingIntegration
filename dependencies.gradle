@@ -3,9 +3,9 @@ repositories {
 		name = "SquidDev"
 		url = "https://squiddev.cc/maven/"
 	}
-	maven {
-		url "https://cursemaven.com"
-	}
+    maven {
+        url "https://cursemaven.com"
+    }
     maven { url = "https://teamopenindustry.cc/maven" }
 }
 
@@ -20,5 +20,5 @@ sourceSets {
 dependencies {
 	modImplementation "org.squiddev:cc-tweaked-1.16.5:1.97.0"
 	modImplementation "curse.maven:immersive-engineering-231951:3809596"
-	modImplementation "trackapi:TrackAPI:1.16.5-forge-1.2"
+	modImplementation "trackapi:TrackAPI:1.16.5-forge-1.3"
 }
