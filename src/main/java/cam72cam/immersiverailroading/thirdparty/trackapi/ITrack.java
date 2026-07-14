@@ -4,7 +4,6 @@ import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.world.World;
 import trackapi.lib.ITrackV2;
-import net.minecraft.world.phys.Vec3;
 import trackapi.lib.Util;
 
 public interface ITrack {
@@ -50,7 +49,7 @@ public interface ITrack {
             }
 
             @Override
-            public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, net.minecraft.util.math.vector.Vector3d vel, double gauge) {
+            public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, net.minecraft.util.math.Vec3d vel, double gauge) {
                 ITrack.this.getNextPosition(IRPathingData.wrap(pos), new Vec3d(vel), gauge);
             }
         };
