@@ -6,6 +6,8 @@ import cam72cam.mod.world.World;
 import trackapi.lib.ITrackV2;
 import trackapi.lib.Util;
 
+import net.minecraft.world.phys.Vec3;
+
 public interface ITrack {
     static boolean isRail(World world, Vec3i pos) {
         return get(world, new Vec3d(pos), true) != null;
@@ -49,7 +51,7 @@ public interface ITrack {
             }
 
             @Override
-            public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, net.minecraft.util.math.Vec3d vel, double gauge) {
+            public <D extends trackapi.lib.PathingData> void getNextPosition(D pos, Vec3 vel, double gauge) {
                 ITrack.this.getNextPosition(IRPathingData.wrap(pos), new Vec3d(vel), gauge);
             }
         };
