@@ -12,9 +12,7 @@ import dan200.computercraft.api.lua.ILuaContext;
 import dan200.computercraft.api.lua.LuaException;
 import dan200.computercraft.api.peripheral.IComputerAccess;
 import dan200.computercraft.api.peripheral.IPeripheral;
-import dan200.computercraft.api.peripheral.IPeripheralProvider;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -22,21 +20,17 @@ import java.util.*;
 
 public class ComputerCraft {
     public static void init() {
-        ComputerCraftAPI.registerPeripheralProvider(new IPeripheralProvider() {
-            
-            @Override
-            public IPeripheral getPeripheral( World world,  BlockPos blockPos,  EnumFacing enumFacing) {
-                TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
-                if (rail != null) {
-                    if (rail.getAugment() == Augment.DETECTOR) {
-                        return new DetectorPeripheral(world, blockPos);
-                    }
-                    if (rail.getAugment() == Augment.LOCO_CONTROL) {
-                        return new LocoControlPeripheral(world, blockPos);
-                    }
+        ComputerCraftAPI.registerPeripheralProvider((world, blockPos, _) -> {
+            TileRailBase rail = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(blockPos), TileRailBase.class);
+            if (rail != null) {
+                if (rail.getAugment() == Augment.DETECTOR) {
+                    return new DetectorPeripheral(world, blockPos);
                 }
-                return null;
+                if (rail.getAugment() == Augment.LOCO_CONTROL) {
+                    return new LocoControlPeripheral(world, blockPos);
+                }
             }
+            return null;
         });
 
         CommonEvents.World.TICK.subscribe(TickHandler::onWorldTick);
@@ -92,7 +86,7 @@ public class ComputerCraft {
         }
 
         public void update(Set<IComputerAccess> computers) {
-            if (computers.size() > 0) {
+            if (!computers.isEmpty()) {
                 TileRailBase te = cam72cam.mod.world.World.get(world).getBlockEntity(new Vec3i(pos), TileRailBase.class);
                 EntityRollingStock nearby = te.getStockNearBy(typeFilter);
                 UUID isOverhead = nearby != null ? nearby.getUUID() : null;
@@ -107,7 +101,7 @@ public class ComputerCraft {
         }
 
         @Override
-        public void attach( IComputerAccess computer) {
+        public void attach(IComputerAccess computer) {
             MinecraftServer server = this.world.getMinecraftServer();
             if (server != null) {
                 server.addScheduledTask(() -> TickHandler.attach(this, computer));
@@ -115,7 +109,7 @@ public class ComputerCraft {
         }
 
         @Override
-        public void detach( IComputerAccess computer) {
+        public void detach(IComputerAccess computer) {
             MinecraftServer server = this.world.getMinecraftServer();
             if (server != null) {
                 server.addScheduledTask(() -> TickHandler.detach(this, computer));
@@ -130,7 +124,7 @@ public class ComputerCraft {
 
         
         @Override
-        public Object[] callMethod( IComputerAccess iComputerAccess,  ILuaContext iLuaContext, int i,  Object[] objects) throws LuaException, InterruptedException {
+        public Object[] callMethod(IComputerAccess iComputerAccess,  ILuaContext iLuaContext, int i,  Object[] objects) throws LuaException, InterruptedException {
             try {
                 CommonAPI api = CommonAPI.create(world, pos);
                 if (api != null && i < fnImpls.length) {
@@ -143,7 +137,7 @@ public class ComputerCraft {
         }
 
         @Override
-        public boolean equals( IPeripheral iPeripheral) {
+        public boolean equals(IPeripheral iPeripheral) {
             return iPeripheral == this;
         }
     }
