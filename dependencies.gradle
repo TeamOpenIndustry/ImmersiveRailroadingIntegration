@@ -24,7 +24,7 @@ sourceSets {
 
 dependencies {
 	//Non-existent in 1.21.4
-//	modImplementation "cc.tweaked:cc-tweaked-1.21.1-forge:1.116.2"
 //	modImplementation "curse.maven:immersive-engineering-231951:6733669"
+	modImplementation "cc.tweaked:cc-tweaked-1.21.8-forge:1.116.1"
 	modImplementation "trackapi:TrackAPI:1.21.4-neoforge-1.3"
 }
